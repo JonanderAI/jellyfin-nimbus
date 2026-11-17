@@ -645,3 +645,13 @@ html::before {
 /* las filas con episodios llevan una linea mas de texto */
 .verticalSection:has(.nb-ep-num) .emby-scroller { padding-bottom: calc(23.8px + 1.5em) !important; }
 .nb-hero { margin-bottom: .6em; }
+
+/* ---------- Menu superior (cabecera Material UI de Jellyfin 10.11+) ---------- */
+header.MuiAppBar-root { background: linear-gradient(180deg, rgba(7,10,28,.9), rgba(7,10,28,0)) !important; box-shadow: none !important; backdrop-filter: none !important; }
+header .MuiToolbar-root { padding-left: max(24px, 3.5%) !important; padding-right: max(24px, 3.5%) !important; gap: 6px; }
+header .MuiButton-root { border-radius: 999px !important; text-transform: none !important; font-weight: 600 !important; color: var(--nb-muted) !important; padding: .45em 1.1em !important; transition: background .2s, color .2s, transform .2s; font-family: var(--nb-font-head) !important; }
+header .MuiButton-root:hover { background: rgba(122,123,255,.16) !important; color: #fff !important; }
+header .MuiButton-root.nb-active { background: linear-gradient(135deg, rgba(var(--nb-accent-rgb),.28), rgba(122,123,255,.28)) !important; color: #fff !important; box-shadow: 0 0 0 1px rgba(160,185,255,.25) inset; }
+header .MuiButton-root:first-of-type { font-weight: 800 !important; font-size: 1.05em; color: #fff !important; letter-spacing: .02em; margin-right: 10px; }
+header .MuiIconButton-root { border-radius: 50% !important; color: #cdd6ff !important; transition: background .2s, transform .2s; }
+header .MuiIconButton-root:hover { background: rgba(var(--nb-accent-rgb),.16) !important; transform: scale(1.08); }

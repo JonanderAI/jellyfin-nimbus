@@ -136,7 +136,18 @@
     clearTimeout(obsT); obsT = setTimeout(function () { episodes(); }, 150);
   }).observe(document.body, { childList: true, subtree: true });
 
+  // Marca la pestana activa del menu superior (Favoritos, Peliculas, Series...)
+  function markNav() {
+    var h = location.hash.split('?');
+    document.querySelectorAll('header a.MuiButton-root[href]').forEach(function (a, i) {
+      var u = a.getAttribute('href') || '', hh = u.indexOf('#') >= 0 ? u.slice(u.indexOf('#')) : u, p = hh.split('?');
+      var same = p[0] === h[0] && (!p[1] || (h[1] || '').indexOf(p[1].split('&')[0]) >= 0);
+      a.classList.toggle('nb-active', i > 0 && same);
+    });
+  }
+
   function tick() {
+    markNav();
     if (!api() || !isHome()) { episodes(); return; }
     var page = pageEl();
     if (page) { build(page); libs(page); }
