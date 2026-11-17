@@ -44,9 +44,11 @@
     var logoTag = it.ImageTags && it.ImageTags.Logo;
     hero.classList.remove('nb-has-logo');
     logo.onload = null; logo.onerror = null;
+    hero.classList.remove('nb-logo-pending');
     if (logoTag) {
-      logo.onload = function () { hero.classList.add('nb-has-logo'); };
-      logo.onerror = function () { hero.classList.remove('nb-has-logo'); };
+      hero.classList.add('nb-logo-pending'); // esqueleto brillante hasta que cargue el logo
+      logo.onload = function () { hero.classList.add('nb-has-logo'); hero.classList.remove('nb-logo-pending'); };
+      logo.onerror = function () { hero.classList.remove('nb-has-logo'); hero.classList.remove('nb-logo-pending'); };
       logo.alt = it.Name;
       logo.src = api().getImageUrl(it.Id, { type: 'Logo', maxWidth: 700, tag: logoTag });
     } else { logo.removeAttribute('src'); }
@@ -112,7 +114,15 @@
         if (!it || !it.BackdropImageTags || !it.BackdropImageTags.length) return;
         var url = c.getImageUrl(it.Id, { type: 'Backdrop', maxWidth: 800, tag: it.BackdropImageTags[0] });
         var img = card.querySelector('.cardImageContainer');
-        if (img) { img.style.setProperty('background-image', 'url("' + url + '")', 'important'); img.classList.add('nb-lib-img'); }
+        if (!img) return;
+        img.classList.add('nb-lib-img'); // invisible (esqueleto detras) hasta que cargue
+        var pre = new Image();
+        pre.onload = function () {
+          img.style.setProperty('background-image', 'url("' + url + '")', 'important');
+          img.classList.add('nb-lib-ready');
+        };
+        pre.onerror = function () { img.classList.add('nb-lib-ready'); };
+        pre.src = url;
       });
     });
   }

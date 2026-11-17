@@ -776,3 +776,19 @@ header .MuiButton-root:first-of-type img, header .MuiButton-root:first-of-type s
 @media (max-width: 1100px) { .nb-hero { height: clamp(280px, 46vw, 520px) !important; } }
 @media (max-width: 800px) { .nb-hero { height: clamp(240px, 70vw, 380px) !important; } }
 .layout-tv .nb-hero { height: clamp(360px, 36vw, 560px) !important; }
+
+/* ---------- Sin brillo en el nombre del servidor / logo ---------- */
+header .MuiButton-root:first-of-type { text-shadow: none !important; }
+header .MuiButton-root:first-of-type img, header .MuiButton-root:first-of-type svg { filter: none !important; }
+
+/* ---------- Loaders: logo del hero e imagenes de las colecciones ---------- */
+.nb-hero.nb-logo-pending .nb-hero-title { visibility: hidden; }
+.nb-hero.nb-logo-pending .nb-hero-body::before {
+  content: ""; display: block; width: min(360px, 60%); height: 72px; margin-bottom: .4em; border-radius: 14px;
+  background: linear-gradient(110deg, rgba(255,255,255,.07) 30%, rgba(255,255,255,.18) 50%, rgba(255,255,255,.07) 70%) 200% 0 / 200% 100%;
+  animation: nb-skel 1.4s linear infinite;
+}
+.nb-hero-logo { transition: opacity .4s; }
+.nb-hero.nb-has-logo .nb-hero-logo { animation: nb-rise .5s var(--nb-ease) backwards; }
+.card[data-type="CollectionFolder"] .cardImageContainer.nb-lib-img { opacity: 0; transition: opacity .5s var(--nb-ease); }
+.card[data-type="CollectionFolder"] .cardImageContainer.nb-lib-img.nb-lib-ready { opacity: 1; }
