@@ -298,9 +298,20 @@
     b.style.setProperty('--nb-mf', 'url("' + img.src + '")');
   }
 
+  // Logo de Jellyfin: se pinta con mascara para usar el degradado del tema elegido
+  function brandLogo() {
+    var img = document.querySelector('header .MuiToolbar-root a.MuiButton-root .MuiButton-startIcon img');
+    if (!img || !img.src) return;
+    var span = img.parentElement;
+    if (span.getAttribute('data-nb-logo')) return;
+    span.setAttribute('data-nb-logo', '1');
+    span.style.setProperty('--nb-logo', 'url("' + img.src + '")');
+  }
+
   function tick() {
     markNav();
     moonfin();
+    brandLogo();
     ensureBtn();
     if (!api() || !isHome()) { episodes(); return; }
     var page = pageEl();

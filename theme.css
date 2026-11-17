@@ -792,3 +792,61 @@ header .MuiButton-root:first-of-type img, header .MuiButton-root:first-of-type s
 .nb-hero.nb-has-logo .nb-hero-logo { animation: nb-rise .5s var(--nb-ease) backwards; }
 .card[data-type="CollectionFolder"] .cardImageContainer.nb-lib-img { opacity: 0; transition: opacity .5s var(--nb-ease); }
 .card[data-type="CollectionFolder"] .cardImageContainer.nb-lib-img.nb-lib-ready { opacity: 1; }
+
+/* ---------- Logo de Jellyfin con el degradado del tema (la mascara la prepara hero.js) ---------- */
+header .MuiButton-startIcon[data-nb-logo] { position: relative; display: inline-flex; }
+header .MuiButton-startIcon[data-nb-logo] img { visibility: hidden; }
+header .MuiButton-startIcon[data-nb-logo]::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--nb-accent), var(--nb-accent-2));
+  -webkit-mask: var(--nb-logo) center / contain no-repeat; mask: var(--nb-logo) center / contain no-repeat;
+}
+
+/* ---------- Contador de episodios sin ver (series): pastilla con degradado dentro de la tarjeta ---------- */
+.cardIndicators { top: 8px !important; right: 8px !important; left: auto !important; padding: 0 !important; }
+.countIndicator, .playedIndicator {
+  position: static !important; box-sizing: border-box; min-width: 24px; height: 24px; padding: 0 7px;
+  display: inline-flex !important; align-items: center; justify-content: center; border-radius: 999px !important;
+  background: linear-gradient(135deg, var(--nb-accent), var(--nb-accent-2)) !important; color: #04101e !important;
+  font: 700 11px/1 var(--nb-font-head) !important; letter-spacing: .02em; box-shadow: 0 4px 12px rgba(0,0,0,.45);
+}
+
+/* ---------- Contador de episodios: mismo estilo que chips y botones (cristal + borde translucido) ---------- */
+.countIndicator, .playedIndicator {
+  background: rgba(12,18,48,.72) !important; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border: 1px solid var(--nb-line); color: var(--nb-text) !important; height: 24px; min-width: 0; padding: 0 9px 0 8px;
+  font: 600 12px/1 var(--nb-font-body) !important; letter-spacing: 0; box-shadow: none !important; gap: 6px;
+}
+.countIndicator::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: linear-gradient(135deg, var(--nb-accent), var(--nb-accent-2)); flex: none; }
+
+/* ====================================================================
+   Menu superior v2: rellenos alineados con el contenido, grupos y iconos uniformes
+   ==================================================================== */
+header .MuiToolbar-root { padding-left: 3.3% !important; padding-right: 3.3% !important; gap: 8px !important; }
+/* Grupo izquierdo: logo + nombre, luego las pestanas */
+header .MuiButton-root:first-of-type { margin-right: 18px !important; padding: .35em .8em .35em .4em !important; }
+header .MuiButton-root { gap: .55em; }
+/* Grupo derecho: todos los iconos con la misma caja (40x40) y el mismo glifo (22px) */
+header .MuiToolbar-root .MuiIconButton-root, header .headerMoonfinButton, .nb-cust-btn {
+  width: 40px !important; height: 40px !important; margin-left: 2px !important; margin-right: 0 !important;
+}
+header .MuiToolbar-root .MuiIconButton-root svg { width: 22px !important; height: 22px !important; }
+header .headerMoonfinButton[data-nb-mf]::before { width: 22px; height: 22px; }
+.material-icons.palette::before { font-size: 1.3rem !important; }
+/* Avatar: separado del resto con una linea fina */
+header .MuiToolbar-root div:has(> img) { width: 36px !important; height: 36px !important; margin-left: 14px !important; position: relative; }
+header .MuiToolbar-root div:has(> img)::before { content: ""; position: absolute; left: -9px; top: 50%; width: 1px; height: 22px; transform: translateY(-50%); background: var(--nb-line); }
+@media (max-width: 800px) {
+  header .MuiToolbar-root { padding-left: 12px !important; padding-right: 12px !important; gap: 4px !important; }
+  header .MuiToolbar-root .MuiIconButton-root, header .headerMoonfinButton, .nb-cust-btn { width: 38px !important; height: 38px !important; }
+  header .MuiToolbar-root div:has(> img) { margin-left: 8px !important; }
+  header .MuiToolbar-root div:has(> img)::before { display: none; }
+}
+
+/* ---------- Menos espacio entre secciones ---------- */
+.homeSectionsContainer .verticalSection + .verticalSection { margin-top: .4em !important; }
+
+/* ---------- Filas sin barras de scroll visibles (sobre todo en movil) ---------- */
+.emby-scroller, .itemsContainer, .scrollSlider { scrollbar-width: none; -ms-overflow-style: none; }
+.emby-scroller::-webkit-scrollbar, .itemsContainer::-webkit-scrollbar, .scrollSlider::-webkit-scrollbar { display: none; width: 0; height: 0; }
+html, body { overflow-x: hidden; }
