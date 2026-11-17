@@ -39,8 +39,20 @@
     pre.src = url;
     if (hero.querySelector('.nb-hero-title').textContent === '') hero.style.backgroundImage = 'url("' + url + '")';
     hero.querySelector('.nb-hero-title').textContent = it.Name;
+    // logo de la pelicula en lugar del titulo (si tiene)
+    var logo = hero.querySelector('.nb-hero-logo');
+    var logoTag = it.ImageTags && it.ImageTags.Logo;
+    hero.classList.remove('nb-has-logo');
+    logo.onload = null; logo.onerror = null;
+    if (logoTag) {
+      logo.onload = function () { hero.classList.add('nb-has-logo'); };
+      logo.onerror = function () { hero.classList.remove('nb-has-logo'); };
+      logo.alt = it.Name;
+      logo.src = api().getImageUrl(it.Id, { type: 'Logo', maxWidth: 700, tag: logoTag });
+    } else { logo.removeAttribute('src'); }
     hero.querySelector('.nb-hero-meta').textContent = fmtMeta(it);
     hero.querySelector('.nb-hero-play').setAttribute('href', '#/details?id=' + it.Id);
+    hero.setAttribute('data-id', it.Id);
     hero.querySelector('.nb-hero-fav').onclick = function (e) {
       e.preventDefault();
       api().updateFavouriteStatus(api().getCurrentUserId(), it.Id, true);
@@ -58,10 +70,16 @@
     hero.className = 'nb-hero nb-hero-loading';
     hero.innerHTML =
       '<div class="nb-hero-shade"></div><div class="nb-hero-body">' +
-      '<div class="nb-hero-title"></div><div class="nb-hero-meta"></div>' +
+      '<img class="nb-hero-logo" alt=""><div class="nb-hero-title"></div><div class="nb-hero-meta"></div>' +
       '<div class="nb-hero-actions"><a class="nb-hero-play" href="#"><span class="material-icons play_arrow" aria-hidden="true"></span>Reproducir</a>' +
       '<a class="nb-hero-fav" href="#"><span class="material-icons add" aria-hidden="true"></span>Mi lista</a></div></div>';
     container.parentNode.insertBefore(hero, container);
+    // clic en cualquier parte del hero abre la ficha del titulo mostrado
+    hero.addEventListener('click', function (e) {
+      if (e.target.closest('a')) return; // los botones tienen su propio enlace
+      var id = hero.getAttribute('data-id');
+      if (id) location.hash = '#/details?id=' + id;
+    });
 
     var c = api();
     c.getItems(c.getCurrentUserId(), {
@@ -129,17 +147,19 @@
   var actx = null, lastHover = 0;
   function soundOn() { try { return localStorage.getItem('nb-sound') !== 'off'; } catch (e) { return true; } }
   function playing() { var v = document.querySelector('video'); return v && !v.paused; }
+  // Tono suave "aura": seno puro, ataque lento, filtro paso bajo y cola larga
   function blip(freq, dur, vol, type, slideTo) {
     if (!actx || !soundOn() || playing()) return;
-    var t = actx.currentTime, o = actx.createOscillator(), g = actx.createGain();
-    o.type = type || 'sine';
+    var t = actx.currentTime, o = actx.createOscillator(), g = actx.createGain(), f = actx.createBiquadFilter();
+    o.type = 'sine';
+    f.type = 'lowpass'; f.frequency.value = 1800; f.Q.value = 0.3;
     o.frequency.setValueAtTime(freq, t);
     if (slideTo) o.frequency.exponentialRampToValueAtTime(slideTo, t + dur);
     g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(vol, t + 0.01);
+    g.gain.exponentialRampToValueAtTime(vol, t + dur * 0.35);
     g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    o.connect(g); g.connect(actx.destination);
-    o.start(t); o.stop(t + dur + 0.02);
+    o.connect(f); f.connect(g); g.connect(actx.destination);
+    o.start(t); o.stop(t + dur + 0.05);
   }
   function unlock() {
     if (!actx) { try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return; } }
@@ -149,12 +169,12 @@
   document.addEventListener('mouseover', function (e) {
     var el = e.target.closest && e.target.closest('.card, .emby-tab-button, .headerButton, .navMenuOption');
     if (!el || el.contains(e.relatedTarget)) return;
-    var now = Date.now(); if (now - lastHover < 60) return; lastHover = now;
-    blip(1250, 0.05, 0.015, 'sine');
+    var now = Date.now(); if (now - lastHover < 140) return; lastHover = now;
+    blip(880, 0.16, 0.012);
   });
   document.addEventListener('click', function (e) {
     var el = e.target.closest && e.target.closest('.card, button, .nb-hero-actions a, .emby-tab-button, .navMenuOption');
-    if (el) blip(520, 0.12, 0.035, 'triangle', 860);
+    if (el) blip(587, 0.32, 0.03, 'sine', 784);
   }, true);
 
   document.addEventListener('viewshow', tick);

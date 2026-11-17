@@ -583,3 +583,65 @@ html::before {
 .docspinner, .loading-spinner { border-color: rgba(var(--nb-accent-rgb), .2) !important; border-top-color: var(--nb-accent) !important; filter: drop-shadow(0 0 8px rgba(var(--nb-accent-rgb), .5)); }
 .splashLogo, .loadingLogo { animation: nb-pulse 1.6s ease-in-out infinite; }
 .emby-button .mdl-spinner { width: 1.4em; height: 1.4em; }
+
+/* ---------- Hero: el alto se adapta al ancho de pantalla ---------- */
+.nb-hero { height: auto !important; aspect-ratio: 21 / 8; min-height: 280px; max-height: 72vh; }
+@media (max-width: 1100px) { .nb-hero { aspect-ratio: 16 / 8; } }
+@media (max-width: 800px) { .nb-hero { aspect-ratio: 4 / 3; min-height: 260px; } }
+.layout-tv .nb-hero { height: auto !important; aspect-ratio: 21 / 8; }
+
+/* ---------- Menus contextuales y popups ---------- */
+/* Menus de Material UI (Jellyfin 10.11+) y dialogos */
+.MuiMenu-paper, .MuiPopover-paper, .MuiDialog-paper, .MuiAutocomplete-paper {
+  background: linear-gradient(180deg, rgba(24,33,78,.94), rgba(12,18,48,.96)) !important; background-image: linear-gradient(180deg, rgba(24,33,78,.94), rgba(12,18,48,.96)) !important;
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--nb-line); border-radius: 18px !important; color: var(--nb-text) !important;
+  box-shadow: 0 24px 60px rgba(0,0,0,.6) !important;
+}
+.MuiMenu-list { padding: 8px !important; }
+.MuiMenuItem-root { border-radius: 10px !important; margin: 1px 0; color: var(--nb-text) !important; font-family: var(--nb-font-body) !important; transition: background .15s, transform .15s; }
+.MuiMenuItem-root:hover, .MuiMenuItem-root.Mui-focusVisible, .MuiMenuItem-root.Mui-selected { background: rgba(var(--nb-accent-rgb), .16) !important; }
+.MuiMenuItem-root:hover { transform: translateX(2px); }
+.MuiListItemIcon-root, .MuiMenuItem-root .MuiSvgIcon-root { color: var(--nb-accent) !important; }
+.MuiListItemIcon-root { min-width: 36px !important; }
+.MuiDivider-root { border-color: var(--nb-line) !important; }
+.MuiBackdrop-root:not(.MuiBackdrop-invisible) { background: rgba(4,6,18,.65) !important; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.MuiTooltip-tooltip { background: rgba(12,18,48,.96) !important; border: 1px solid var(--nb-line); border-radius: 8px !important; color: var(--nb-text) !important; font-family: var(--nb-font-body) !important; }
+.MuiDialogTitle-root { font-family: var(--nb-font-head) !important; font-weight: 800 !important; }
+.MuiButton-contained { background: linear-gradient(135deg, var(--nb-accent), var(--nb-accent-2)) !important; color: #04101e !important; border-radius: 999px !important; }
+.MuiOutlinedInput-root fieldset { border-color: var(--nb-line) !important; border-radius: 10px; }
+.MuiOutlinedInput-root.Mui-focused fieldset { border-color: var(--nb-accent) !important; }
+
+/* Menus y hojas de accion clasicas */
+.actionSheet, .actionSheetContent, .dialog, .formDialog {
+  background: linear-gradient(180deg, rgba(24,33,78,.94), rgba(12,18,48,.96)) !important;
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--nb-line); border-radius: 18px !important; box-shadow: 0 24px 60px rgba(0,0,0,.6);
+}
+.actionSheetMenuItem { border-radius: 10px; margin: 2px 8px; transition: background .15s, transform .15s; }
+.actionSheetMenuItem:hover, .actionSheetMenuItem:focus-visible { background: rgba(var(--nb-accent-rgb), .16) !important; transform: translateX(2px); }
+.actionSheetMenuItemIcon, .actionsheetMenuItemIcon { color: var(--nb-accent); }
+.actionSheetTitle, .formDialogHeaderTitle { font-family: var(--nb-font-head); font-weight: 800; }
+.dialogBackdrop.dialogBackdropOpened { background: rgba(4,6,18,.65) !important; backdrop-filter: blur(4px); }
+@keyframes nb-pop { from { opacity: 0; transform: scale(.96) translateY(6px); } to { opacity: 1; transform: none; } }
+.dialog.opened, .actionSheet.opened { animation: nb-pop .22s var(--nb-ease); }
+
+/* Hero clicable y titulos de "Mis contenidos" mas grandes */
+.nb-hero { cursor: pointer; }
+.card[data-type="CollectionFolder"] .cardText { font-size: 1.9em !important; line-height: 1.1; }
+.card[data-type="CollectionFolder"] .cardText a { font-size: inherit; }
+.sectionTitle, .sectionTitleContainer h2 { font-size: 1.5em; }
+
+/* ---------- Logo de la pelicula en el hero (en lugar del titulo) ---------- */
+.nb-hero-logo { display: none; max-height: clamp(70px, 18vh, 170px); max-width: min(520px, 100%); object-fit: contain; object-position: left bottom; filter: drop-shadow(0 4px 22px rgba(0,0,0,.65)); margin-bottom: .2em; }
+.nb-hero.nb-has-logo .nb-hero-logo { display: block; }
+.nb-hero.nb-has-logo .nb-hero-title { display: none; }
+
+/* ---------- Espaciado normalizado entre secciones del Inicio ---------- */
+.homeSectionsContainer .verticalSection { margin: 0 !important; padding-top: 0 !important; }
+.homeSectionsContainer .verticalSection + .verticalSection { margin-top: 1.4em !important; }
+.verticalSection .sectionTitleContainer { margin: 0 !important; padding: 0 !important; }
+.verticalSection .sectionTitle, .verticalSection .sectionTitleContainer h2 { margin: 0 0 .4em !important; padding: 0; }
+/* las filas con episodios llevan una linea mas de texto */
+.verticalSection:has(.nb-ep-num) .emby-scroller { padding-bottom: calc(23.8px + 1.5em) !important; }
+.nb-hero { margin-bottom: .6em; }
