@@ -35,7 +35,7 @@
     var it = items[i];
     var url = backdropUrl(it);
     var pre = new Image();
-    pre.onload = function () { hero.style.backgroundImage = 'url("' + url + '")'; };
+    pre.onload = function () { hero.style.backgroundImage = 'url("' + url + '")'; hero.classList.remove('nb-hero-loading'); };
     pre.src = url;
     if (hero.querySelector('.nb-hero-title').textContent === '') hero.style.backgroundImage = 'url("' + url + '")';
     hero.querySelector('.nb-hero-title').textContent = it.Name;
@@ -55,7 +55,7 @@
     var container = page.querySelector('.homeSectionsContainer');
     if (!container || page.querySelector('.nb-hero')) return;
     var hero = document.createElement('div');
-    hero.className = 'nb-hero';
+    hero.className = 'nb-hero nb-hero-loading';
     hero.innerHTML =
       '<div class="nb-hero-shade"></div><div class="nb-hero-body">' +
       '<div class="nb-hero-title"></div><div class="nb-hero-meta"></div>' +

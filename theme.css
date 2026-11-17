@@ -556,3 +556,30 @@ html::before {
 .cardOverlayFab-primary { width: 3.8rem !important; height: 3.8rem !important; background: linear-gradient(135deg, var(--nb-accent), var(--nb-accent-2)) !important; color: #04101e !important; border: 0 !important; box-shadow: 0 8px 24px rgba(var(--nb-accent-rgb), .4); }
 .cardOverlayFab-primary .cardOverlayButtonIcon::before { font-size: 1.5rem !important; }
 .cardOverlayButton-br { padding: .5em; gap: .4em; }
+
+/* ---------- Hero mas grande ---------- */
+.nb-hero { height: clamp(400px, 58vh, 620px); margin-top: .8em; border-radius: 28px; }
+.nb-hero-body { left: 56px; bottom: 52px; right: 56px; max-width: 680px; }
+.nb-hero-title { font-size: clamp(2.6em, 4.4vw, 4.2em); }
+.nb-hero-meta { font-size: 1.05em; margin: .6em 0 1.3em; }
+.nb-hero-actions a { padding: .9em 2em; font-size: 1.05em; }
+@media (max-width: 800px) { .nb-hero { height: 300px; border-radius: 20px; } .nb-hero-body { left: 18px; bottom: 20px; right: 18px; } .nb-hero-title { font-size: 2em; } }
+.layout-tv .nb-hero { height: 560px; border-radius: 32px; }
+
+/* ---------- Loaders ---------- */
+@keyframes nb-skel { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@keyframes nb-spin { to { transform: rotate(360deg); } }
+@keyframes nb-pulse { 0%, 100% { opacity: .55; transform: scale(.94); } 50% { opacity: 1; transform: scale(1.04); } }
+/* Esqueleto brillante mientras cargan las imagenes (queda detras de la imagen) */
+.cardScalable, .nb-hero-loading {
+  background: linear-gradient(110deg, var(--nb-bg-2) 30%, #223273 50%, var(--nb-bg-2) 70%) 200% 0 / 200% 100%;
+  animation: nb-skel 1.6s linear infinite;
+}
+.nb-hero.nb-hero-loading { animation: nb-skel 1.6s linear infinite; }
+/* Spinner de Jellyfin */
+.mdl-spinner__layer-1, .mdl-spinner__layer-2, .mdl-spinner__layer-3, .mdl-spinner__layer-4 { border-color: var(--nb-accent) !important; }
+.mdl-spinner__layer-2, .mdl-spinner__layer-4 { border-color: var(--nb-accent-2) !important; }
+.mdl-spinner { filter: drop-shadow(0 0 8px rgba(var(--nb-accent-rgb), .6)); }
+.docspinner, .loading-spinner { border-color: rgba(var(--nb-accent-rgb), .2) !important; border-top-color: var(--nb-accent) !important; filter: drop-shadow(0 0 8px rgba(var(--nb-accent-rgb), .5)); }
+.splashLogo, .loadingLogo { animation: nb-pulse 1.6s ease-in-out infinite; }
+.emby-button .mdl-spinner { width: 1.4em; height: 1.4em; }
