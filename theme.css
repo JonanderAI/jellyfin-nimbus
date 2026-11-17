@@ -1130,3 +1130,14 @@ header .MuiToolbar-root { min-height: 66px !important; padding-top: 10px !import
   .homeSectionsContainer:not(:has(> .section5:not(.hide))) > .section1 .sectionTitleContainer, .homeSectionsContainer:not(:has(> .section5:not(.hide))) > .section1 > .sectionTitle { padding-inline: var(--nb-gutter) !important; }
   .homeSectionsContainer:not(:has(> .section5:not(.hide))) > .section1 .emby-scroller { padding-left: var(--nb-gutter) !important; padding-right: var(--nb-gutter) !important; margin-left: 0 !important; }
 }
+
+/* ====================================================================
+   Las dos columnas de "Seguir viendo / A continuacion" encajan exactamente con las tarjetas
+   de colecciones (mismo hueco entre columnas), asi "A continuacion" arranca donde empieza "Series"
+   ==================================================================== */
+:root { --nb-gap: 20px; }
+.homeSectionsContainer > .section0 .itemsContainer { gap: var(--nb-gap) !important; }
+@media (min-width: 1100px) {
+  .homeSectionsContainer > .section1 { padding-right: calc(var(--nb-gap) / 2) !important; }
+  .homeSectionsContainer > .section5 { padding-left: calc(var(--nb-gap) / 2) !important; }
+}
