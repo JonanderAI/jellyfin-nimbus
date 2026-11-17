@@ -10,11 +10,11 @@
   // ---- Idioma: castellano si el navegador/Jellyfin esta en espanol, ingles en el resto ----
   var LANG = /^es/i.test(document.documentElement.lang || navigator.language || 'en') ? 'es' : 'en';
   var I18N = {
-    es: { play: 'Reproducir', myList: 'Mi lista', info: 'Más información', next: 'Siguiente', season: 'Temporada', episode: 'Episodio', customize: 'Personalizar', close: 'Cerrar', customizeTheme: 'Personalizar tema',
+    es: { play: 'Reproducir', myList: 'Mi lista', addFav: 'Añadir a favoritos', inFav: 'En favoritos', season: 'Temporada', episode: 'Episodio', customize: 'Personalizar', close: 'Cerrar', customizeTheme: 'Personalizar tema',
       accent: 'Color de acento', accent1: 'Acento 1', accent2: 'Acento 2', font: 'Fuente', cards: 'Tarjetas', zoom: 'Zoom al pasar', radius: 'Redondeo', options: 'Opciones',
       tint: 'Tintar fondos con el color', showHero: 'Mostrar hero del Inicio', bgAnim: 'Fondo animado', anim: 'Animaciones', sounds: 'Sonidos', reset: 'Restablecer valores', saved: 'Se guarda en este dispositivo.',
       fDefault: 'Actual', fMagic: 'Mágica', fCinema: 'Cine', fTech: 'Tech', fFamily: 'Familiar' },
-    en: { play: 'Play', myList: 'My list', info: 'More info', next: 'Next', season: 'Season', episode: 'Episode', customize: 'Customize', close: 'Close', customizeTheme: 'Customize theme',
+    en: { play: 'Play', myList: 'My list', addFav: 'Add to favorites', inFav: 'In favorites', season: 'Season', episode: 'Episode', customize: 'Customize', close: 'Close', customizeTheme: 'Customize theme',
       accent: 'Accent color', accent1: 'Accent 1', accent2: 'Accent 2', font: 'Font', cards: 'Cards', zoom: 'Hover zoom', radius: 'Corner radius', options: 'Options',
       tint: 'Tint backgrounds with the color', showHero: 'Show home hero', bgAnim: 'Animated background', anim: 'Animations', sounds: 'Sounds', reset: 'Reset to defaults', saved: 'Saved on this device.',
       fDefault: 'Default', fMagic: 'Magic', fCinema: 'Cinema', fTech: 'Tech', fFamily: 'Family' }
@@ -82,7 +82,22 @@
     hero.querySelector('.nb-hero-meta').textContent = fmtMeta(it);
     hero.querySelector('.nb-hero-play').setAttribute('href', '#/details?id=' + it.Id);
     hero.setAttribute('data-id', it.Id);
-    hero.querySelector('.nb-hero-info').setAttribute('href', '#/details?id=' + it.Id);
+    var fav = hero.querySelector('.nb-hero-fav');
+    function paintFav() {
+      var on = !!(it.UserData && it.UserData.IsFavorite);
+      fav.classList.toggle('nb-fav-on', on);
+      fav.querySelector('.nb-fav-txt').textContent = on ? tr('inFav') : tr('addFav');
+    }
+    paintFav();
+    fav.onclick = function (e) {
+      e.preventDefault();
+      it.UserData = it.UserData || {};
+      var next = !it.UserData.IsFavorite;
+      it.UserData.IsFavorite = next;
+      paintFav();
+      fav.classList.remove('nb-fav-pop'); void fav.offsetWidth; fav.classList.add('nb-fav-pop');
+      try { api().updateFavouriteStatus(api().getCurrentUserId(), it.Id, next); } catch (err) {}
+    };
     hero.classList.remove('nb-hero-in');
     void hero.offsetWidth;
     hero.classList.add('nb-hero-in');
@@ -97,8 +112,7 @@
       '<div class="nb-hero-shade"></div><div class="nb-hero-bar"><i></i></div><div class="nb-hero-body">' +
       '<img class="nb-hero-logo" alt=""><div class="nb-hero-title"></div><div class="nb-hero-meta"></div>' +
       '<div class="nb-hero-actions"><a class="nb-hero-play" href="#"><span class="material-icons play_arrow" aria-hidden="true"></span>' + tr('play') + '</a>' +
-      '<a class="nb-hero-info" href="#"><span class="material-icons info" aria-hidden="true"></span>' + tr('info') + '</a>' +
-      '<a class="nb-hero-next" href="#" aria-label="' + tr('next') + '" title="' + tr('next') + '"><span class="material-icons skip_next" aria-hidden="true"></span></a></div></div>';
+      '<a class="nb-hero-fav" href="#"><span class="material-icons favorite" aria-hidden="true"></span><span class="nb-fav-txt"></span></a></div></div>';
     container.parentNode.insertBefore(hero, container);
     // clic en cualquier parte del hero abre la ficha del titulo mostrado
     hero.addEventListener('click', function (e) {
@@ -123,13 +137,6 @@
           render(hero, items, i);
         }, ROTATE_MS);
       }
-      // boton "siguiente": salta al siguiente titulo y reinicia el temporizador
-      hero.querySelector('.nb-hero-next').addEventListener('click', function (e) {
-        e.preventDefault();
-        i = (i + 1) % items.length;
-        render(hero, items, i);
-        start();
-      });
       render(hero, items, i);
       start();
     });
