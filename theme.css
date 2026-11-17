@@ -850,3 +850,13 @@ header .MuiToolbar-root div:has(> img)::before { content: ""; position: absolute
 .emby-scroller, .itemsContainer, .scrollSlider { scrollbar-width: none; -ms-overflow-style: none; }
 .emby-scroller::-webkit-scrollbar, .itemsContainer::-webkit-scrollbar, .scrollSlider::-webkit-scrollbar { display: none; width: 0; height: 0; }
 html, body { overflow-x: hidden; }
+
+/* ---------- Hero: la imagen siempre cubre (sin franjas en movil); el movimiento lento es un paneo ---------- */
+@keyframes nb-kenburns { from { background-position: 35% 30%; } to { background-position: 65% 42%; } }
+.nb-hero { background-size: cover !important; background-repeat: no-repeat !important; }
+
+/* ---------- Menu superior: hover discreto (solo cambia el color, sin fondo ni zoom) ---------- */
+header .MuiButton-root:hover, header .MuiButton-root.nb-active:hover { background: transparent !important; color: #fff !important; transform: none !important; }
+header .MuiButton-root.nb-active:hover { background: linear-gradient(135deg, rgba(var(--nb-accent-rgb),.28), rgba(122,123,255,.28)) !important; }
+header .MuiToolbar-root .MuiIconButton-root:hover, header .headerMoonfinButton:hover, .nb-cust-btn:hover { background: transparent !important; color: #fff !important; transform: none !important; }
+header .MuiTouchRipple-root { display: none !important; }
