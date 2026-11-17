@@ -1,0 +1,14 @@
+/* Nimbus - Top numerado (CSS counters, solo filas de poster). Importar DESPUES de theme.css */
+.itemsContainer.scrollSlider { counter-reset: nb-top; }
+.itemsContainer.scrollSlider > .overflowPortraitCard { counter-increment: nb-top; position: relative; box-sizing: content-box; padding-left: 3.6em; }
+.itemsContainer.scrollSlider > .overflowPortraitCard::before {
+  content: counter(nb-top);
+  position: absolute; left: 0; bottom: 2.6em; z-index: 3; width: 1.1em; text-align: right;
+  font-family: var(--nb-font-head); font-weight: 800; font-size: 6.5em; line-height: .8; letter-spacing: -.04em;
+  background: linear-gradient(180deg, var(--nb-accent), var(--nb-accent-2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,.65)); pointer-events: none;
+}
+.itemsContainer.scrollSlider > .overflowPortraitCard .cardBox { position: relative; z-index: 2; margin-left: -.9em; }
+.layout-tv .itemsContainer.scrollSlider > .overflowPortraitCard::before { font-size: 8em; }
+@media (max-width: 800px) { .itemsContainer.scrollSlider > .overflowPortraitCard { padding-left: 2.6em; } .itemsContainer.scrollSlider > .overflowPortraitCard::before { font-size: 5em; } }

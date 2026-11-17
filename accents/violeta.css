@@ -1,0 +1,6 @@
+/* Nimbus - acento violeta. Importar DESPUES de theme.css */
+:root {
+  --nb-accent: #b794ff;
+  --nb-accent-2: #ff7ac8;
+  --nb-accent-rgb: 183, 148, 255;
+}

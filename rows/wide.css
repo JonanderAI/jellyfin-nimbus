@@ -1,0 +1,10 @@
+/* Nimbus - fila apaisada (1.8x ancho). Importar DESPUES de theme.css */
+.overflowPortraitCard, .portraitCard { width: 18em !important; }
+.cardPadder-overflowPortrait, .cardPadder-portrait { padding-bottom: 56% !important; }
+.overflowPortraitCard .cardImageContainer, .portraitCard .cardImageContainer { background-position: center 25%; }
+.overflowPortraitCard .cardScalable::after, .portraitCard .cardScalable::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(0deg, rgba(7,10,28,.85), transparent 55%);
+}
+.layout-tv .overflowPortraitCard, .layout-tv .portraitCard { width: 22em !important; }
+@media (max-width: 800px) { .overflowPortraitCard, .portraitCard { width: 14em !important; } }

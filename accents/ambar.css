@@ -1,0 +1,6 @@
+/* Nimbus - acento ambar. Importar DESPUES de theme.css */
+:root {
+  --nb-accent: #ffbe5a;
+  --nb-accent-2: #ff7a59;
+  --nb-accent-rgb: 255, 190, 90;
+}

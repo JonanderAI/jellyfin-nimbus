@@ -1,0 +1,6 @@
+/* Nimbus - acento rosa. Importar DESPUES de theme.css */
+:root {
+  --nb-accent: #ff7ac8;
+  --nb-accent-2: #a78bff;
+  --nb-accent-rgb: 255, 122, 200;
+}

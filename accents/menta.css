@@ -1,0 +1,6 @@
+/* Nimbus - acento menta. Importar DESPUES de theme.css */
+:root {
+  --nb-accent: #6ee6aa;
+  --nb-accent-2: #4cc9ff;
+  --nb-accent-rgb: 110, 230, 170;
+}

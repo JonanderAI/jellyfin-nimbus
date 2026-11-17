@@ -1,0 +1,15 @@
+/* Nimbus - lista compacta (grid de 2 columnas, max. 4 elementos). Importar DESPUES de theme.css */
+.itemsContainer.scrollSlider { display: grid !important; grid-template-columns: 1fr 1fr; gap: 1em; white-space: normal; }
+.itemsContainer.scrollSlider > .card:nth-child(n+5) { display: none; }
+.itemsContainer.scrollSlider > .card[data-type="CollectionFolder"] { display: block; }
+.itemsContainer.scrollSlider > .card .cardText { text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.itemsContainer.scrollSlider > .card { width: auto !important; margin: 0 !important; }
+.itemsContainer.scrollSlider > .card .cardBox {
+  display: flex; align-items: center; gap: 1em; padding: .6em; margin: 0;
+  background: var(--nb-surface); border: 1px solid var(--nb-line); border-radius: var(--nb-radius);
+}
+.itemsContainer.scrollSlider > .card .cardScalable { flex: 0 0 3.4em; width: 3.4em; height: 5em; border-radius: 10px !important; }
+.itemsContainer.scrollSlider > .card .cardPadder { display: none; }
+.itemsContainer.scrollSlider > .card .cardImageContainer { position: absolute; inset: 0; }
+.itemsContainer.scrollSlider > .card .cardFooter { flex: 1; min-width: 0; margin: 0; padding: 0; }
+@media (max-width: 800px) { .itemsContainer.scrollSlider { grid-template-columns: 1fr; } .itemsContainer.scrollSlider > .card:nth-child(n+4) { display: none; } }

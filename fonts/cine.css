@@ -1,0 +1,6 @@
+/* Nimbus - fuente cine. Importar DESPUES de theme.css */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap");
+:root {
+  --nb-font-head: "Cinzel", system-ui, sans-serif;
+  --nb-font-body: "DM Sans", system-ui, sans-serif;
+}

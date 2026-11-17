@@ -1,0 +1,6 @@
+/* Nimbus - fuente tech. Importar DESPUES de theme.css */
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap");
+:root {
+  --nb-font-head: "Sora", system-ui, sans-serif;
+  --nb-font-body: "DM Sans", system-ui, sans-serif;
+}
