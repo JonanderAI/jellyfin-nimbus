@@ -1047,3 +1047,37 @@ header .MuiButton-root:not(.nb-active):hover { letter-spacing: .01em; }
 /* ---------- Hero: sin loader (ni esqueleto brillante ni hueco del logo) ---------- */
 .nb-hero.nb-hero-loading { animation: none !important; background: var(--nb-bg-2) !important; }
 .nb-hero.nb-logo-pending .nb-hero-body::before { display: none !important; }
+
+/* ====================================================================
+   Inicio: "Seguir viendo" y "A continuacion" lado a lado; colecciones a todo el ancho
+   ==================================================================== */
+@media (min-width: 1100px) {
+  .homeSectionsContainer { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1.6em; align-items: start; }
+  .homeSectionsContainer > .verticalSection { grid-column: 1 / -1; min-width: 0; }
+  .homeSectionsContainer > .section0 { order: -3; }
+  .homeSectionsContainer > .section1, .homeSectionsContainer > .section5 { grid-column: auto; order: -2; }
+  /* si solo hay una de las dos, ocupa todo el ancho */
+  .homeSectionsContainer:not(:has(> .section5:not(.hide))) > .section1,
+  .homeSectionsContainer:not(:has(> .section1:not(.hide))) > .section5 { grid-column: 1 / -1; }
+  .homeSectionsContainer > .section1 .sectionTitleContainer, .homeSectionsContainer > .section5 .sectionTitleContainer { padding-inline: 6.6% 0 !important; }
+  .homeSectionsContainer > .section1 .emby-scroller, .homeSectionsContainer > .section5 .emby-scroller { padding-left: 24px !important; padding-right: 0 !important; margin-right: 0 !important; }
+}
+/* Colecciones: se reparten todo el ancho a partes iguales (2 -> mitad y mitad), con un minimo por tarjeta */
+.homeSectionsContainer > .section0 .itemsContainer {
+  display: grid !important; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.4em; white-space: normal !important; width: 100% !important; transform: none !important; overflow: visible !important;
+}
+.homeSectionsContainer > .section0 .card[data-type="CollectionFolder"] { width: auto !important; max-width: none !important; margin: 0 !important; }
+.homeSectionsContainer > .section0 .card[data-type="CollectionFolder"] .cardPadder { padding-bottom: 0 !important; aspect-ratio: 21 / 8; }
+.homeSectionsContainer > .section0 .emby-scrollbuttons { display: none !important; }
+@media (max-width: 800px) { .homeSectionsContainer > .section0 .card[data-type="CollectionFolder"] .cardPadder { aspect-ratio: 16 / 7; } .homeSectionsContainer > .section0 .itemsContainer { grid-template-columns: 1fr 1fr; } }
+
+/* Hero: boton de informacion y siguiente */
+.nb-hero-actions .nb-hero-next { width: 3em; height: 3em; padding: 0 !important; justify-content: center; border-radius: 50%; }
+.nb-hero-actions .nb-hero-next .material-icons { margin: 0; }
+
+/* ====================================================================
+   Menu superior: mas alto y con aire por arriba
+   ==================================================================== */
+header .MuiToolbar-root { min-height: 66px !important; padding-top: 10px !important; padding-bottom: 6px !important; align-items: center; }
+.mainAnimatedPage.libraryPage:not(.itemDetailPage) { margin-top: 18px; }
+.nb-hero { margin-top: .6em !important; }
