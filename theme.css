@@ -1141,3 +1141,70 @@ header .MuiToolbar-root { min-height: 66px !important; padding-top: 10px !import
   .homeSectionsContainer > .section1 { padding-right: calc(var(--nb-gap) / 2) !important; }
   .homeSectionsContainer > .section5 { padding-left: calc(var(--nb-gap) / 2) !important; }
 }
+
+/* ====================================================================
+   Auditoria: componentes de Material UI (ajustes, ficha, listas, panel de administracion)
+   ==================================================================== */
+/* Tipografia: MUI fijaba Noto Sans en sus propios componentes */
+[class*="Mui"]:not(svg):not(.MuiSvgIcon-root):not(.material-icons) { font-family: var(--nb-font-body); }
+.MuiTypography-h1, .MuiTypography-h2, .MuiTypography-h3, .MuiTypography-h4, .MuiTypography-h5, .MuiTypography-h6,
+.MuiTypography-subtitle1, .MuiTypography-subtitle2, .MuiDialogTitle-root, .MuiCardHeader-title, .MuiListSubheader-root { font-family: var(--nb-font-head) !important; }
+.MuiTypography-root, .MuiButtonBase-root, .MuiListItemText-primary, .MuiListItemText-secondary, .MuiInputBase-root, .MuiFormLabel-root, .MuiTab-root, .MuiChip-label { font-family: var(--nb-font-body); }
+/* Fondos: variables de paleta de Jellyfin + contenedores opacos */
+html:root { --jf-palette-background-default: transparent !important; --jf-palette-background-paper: rgba(var(--nb-bg1-rgb), .92) !important; }
+html body .backgroundContainer, html body .backgroundContainer.withBackdrop { background: transparent !important; background-color: transparent !important; }
+.MuiList-root:not(.MuiMenu-list), .MuiCard-root, .MuiAccordion-root, .MuiTableContainer-root { background-color: rgba(var(--nb-surf-rgb), .55) !important; background-image: none !important; border: 1px solid var(--nb-line); border-radius: 14px !important; }
+.MuiDrawer-paper { background: linear-gradient(180deg, var(--nb-bg-1), var(--nb-bg-0)) !important; border-right: 1px solid var(--nb-line) !important; }
+.MuiListItemButton-root.Mui-selected, .MuiListItemButton-root:hover { background: rgba(var(--nb-accent-rgb), .16) !important; }
+.MuiListItemButton-root { border-radius: 10px !important; }
+.MuiTableRow-root:hover { background: rgba(var(--nb-accent-rgb), .08) !important; }
+.MuiTableCell-root { border-color: var(--nb-line) !important; }
+.MuiSwitch-root .Mui-checked + .MuiSwitch-track { background-color: var(--nb-accent) !important; opacity: .9 !important; }
+.MuiSwitch-root .Mui-checked .MuiSwitch-thumb { background-color: #fff !important; }
+.MuiChip-root { background: rgba(var(--nb-surf-rgb), .6) !important; border: 1px solid var(--nb-line); }
+.MuiLinearProgress-bar { background: linear-gradient(90deg, var(--nb-accent), var(--nb-accent-2)) !important; }
+.MuiCircularProgress-root { color: var(--nb-accent) !important; }
+.MuiButton-containedPrimary, .MuiFab-primary { background: linear-gradient(135deg, var(--nb-accent), var(--nb-accent-2)) !important; color: #04101e !important; border-radius: 999px !important; }
+.MuiButton-outlined { border-color: var(--nb-line) !important; border-radius: 999px !important; }
+
+/* Iconos que faltaban por mapear (detectados en la auditoria) */
+.material-icons.keyboard, .material-icons.play_circle_filled, .material-icons.play_circle, .material-icons.play_circle_outline, .material-icons.theaters, .material-icons.account_circle, .material-icons.security, .material-icons.storage, .material-icons.extension, .material-icons.save, .material-icons.upload, .material-icons.help, .material-icons.error, .material-icons.warning, .material-icons.done, .material-icons.clear, .material-icons.arrow_forward, .material-icons.arrow_upward, .material-icons.arrow_downward, .material-icons.sort, .material-icons.filter_list, .material-icons.view_list, .material-icons.view_module, .material-icons.grid_view, .material-icons.calendar_today, .material-icons.event, .material-icons.timer, .material-icons.thumb_up, .material-icons.thumb_down, .material-icons.bookmark, .material-icons.label, .material-icons.public, .material-icons.wifi, .material-icons.translate, .material-icons.devices, .material-icons.supervisor_account, .material-icons.notifications_active, .material-icons.search_off {
+  font-size: 0 !important; line-height: 1 !important; display: inline-flex; align-items: center; justify-content: center; width: 1.5rem; height: 1.5rem;
+}
+.material-icons.keyboard::before, .material-icons.play_circle_filled::before, .material-icons.play_circle::before, .material-icons.play_circle_outline::before, .material-icons.theaters::before, .material-icons.account_circle::before, .material-icons.security::before, .material-icons.storage::before, .material-icons.extension::before, .material-icons.save::before, .material-icons.upload::before, .material-icons.help::before, .material-icons.error::before, .material-icons.warning::before, .material-icons.done::before, .material-icons.clear::before, .material-icons.arrow_forward::before, .material-icons.arrow_upward::before, .material-icons.arrow_downward::before, .material-icons.sort::before, .material-icons.filter_list::before, .material-icons.view_list::before, .material-icons.view_module::before, .material-icons.grid_view::before, .material-icons.calendar_today::before, .material-icons.event::before, .material-icons.timer::before, .material-icons.thumb_up::before, .material-icons.thumb_down::before, .material-icons.bookmark::before, .material-icons.label::before, .material-icons.public::before, .material-icons.wifi::before, .material-icons.translate::before, .material-icons.devices::before, .material-icons.supervisor_account::before, .material-icons.notifications_active::before, .material-icons.search_off::before {
+  font-family: "Font Awesome 6 Free" !important; font-weight: 900; font-style: normal; font-size: 1.15rem; line-height: 1;
+}
+.material-icons.keyboard::before { content: "\f11c"; }
+.material-icons.play_circle_filled::before, .material-icons.play_circle::before, .material-icons.play_circle_outline::before { content: "\f144"; }
+.material-icons.theaters::before { content: "\f008"; }
+.material-icons.account_circle::before { content: "\f2bd"; }
+.material-icons.security::before { content: "\f132"; }
+.material-icons.storage::before { content: "\f1c0"; }
+.material-icons.extension::before { content: "\f12e"; }
+.material-icons.save::before { content: "\f0c7"; }
+.material-icons.upload::before { content: "\f093"; }
+.material-icons.help::before { content: "\f059"; }
+.material-icons.error::before { content: "\f06a"; }
+.material-icons.warning::before { content: "\f071"; }
+.material-icons.done::before { content: "\f00c"; }
+.material-icons.clear::before { content: "\f00d"; }
+.material-icons.arrow_forward::before { content: "\f061"; }
+.material-icons.arrow_upward::before { content: "\f062"; }
+.material-icons.arrow_downward::before { content: "\f063"; }
+.material-icons.sort::before { content: "\f0dc"; }
+.material-icons.filter_list::before { content: "\f0b0"; }
+.material-icons.view_list::before { content: "\f00b"; }
+.material-icons.view_module::before, .material-icons.grid_view::before { content: "\f009"; }
+.material-icons.calendar_today::before, .material-icons.event::before { content: "\f073"; }
+.material-icons.timer::before { content: "\f017"; }
+.material-icons.thumb_up::before { content: "\f164"; }
+.material-icons.thumb_down::before { content: "\f165"; }
+.material-icons.bookmark::before { content: "\f02e"; }
+.material-icons.label::before { content: "\f02b"; }
+.material-icons.public::before { content: "\f0ac"; }
+.material-icons.wifi::before { content: "\f1eb"; }
+.material-icons.translate::before { content: "\f1ab"; }
+.material-icons.devices::before { content: "\f108"; }
+.material-icons.supervisor_account::before { content: "\f0c0"; }
+.material-icons.notifications_active::before { content: "\f0f3"; }
+.material-icons.search_off::before { content: "\f002"; }
