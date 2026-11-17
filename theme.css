@@ -1253,3 +1253,49 @@ html body .backgroundContainer, html body .backgroundContainer.withBackdrop { ba
 
 /* El icono de play dentro del boton Reproducir no lleva circulo propio */
 .btnPlay .detailButton-icon, .btnPlay .detailButton-content { background: transparent !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; border-radius: 0 !important; box-shadow: none !important; }
+
+/* ====================================================================
+   Reproductor (OSD): barra gruesa con degradado, pausa circular con brillo, iconos que reaccionan
+   ==================================================================== */
+.videoOsdBottom { background: linear-gradient(0deg, rgba(var(--nb-bgd-rgb), .95) 0%, rgba(var(--nb-bgd-rgb), 0) 100%) !important; padding-top: 80px; }
+.osdHeader { font-family: var(--nb-font-head); font-weight: 700; }
+.osdHeader .pageTitle { font-size: 1.15em; font-weight: 700; letter-spacing: -.01em; }
+.osdPositionText, .osdDurationText, .osdTimeText, .endsAtText { font-family: var(--nb-font-body); color: #b8c3ee !important; font-size: .9em; }
+.sliderContainer .mdl-slider-background-flex-container { height: 5px !important; border-radius: 5px; overflow: hidden; background: rgba(255,255,255,.2) !important; }
+.sliderContainer .mdl-slider-background-flex, .sliderContainer .mdl-slider-background-flex-inner { height: 5px !important; }
+.mdl-slider-background-lower, .mdl-slider-background-lower-clicked { height: 5px !important; border-radius: 5px !important; background: linear-gradient(90deg, var(--nb-accent), var(--nb-accent-2)) !important; }
+.mdl-slider-background-upper { height: 5px !important; background: rgba(255,255,255,.18) !important; border-radius: 5px !important; }
+.mdl-slider::-webkit-slider-thumb { width: 16px !important; height: 16px !important; background: var(--nb-accent) !important; box-shadow: 0 0 14px var(--nb-accent) !important; border: 0 !important; transition: transform .15s; }
+.mdl-slider:hover::-webkit-slider-thumb { transform: scale(1.25); }
+.mdl-slider::-moz-range-thumb { background: var(--nb-accent) !important; box-shadow: 0 0 14px var(--nb-accent) !important; border: 0 !important; }
+.osdControls .btnPause, .osdControls .btnPlay { width: 52px !important; height: 52px !important; border-radius: 50% !important; margin: 0 10px !important;
+  background: rgba(255,255,255,.08) !important; border: 2px solid var(--nb-accent) !important; color: var(--nb-accent) !important;
+  box-shadow: 0 0 22px rgba(var(--nb-accent-rgb), .45), inset 0 0 14px rgba(var(--nb-accent-rgb), .3) !important; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: transform .2s var(--nb-ease), box-shadow .2s; }
+.osdControls .btnPause:hover { transform: scale(1.08); box-shadow: 0 0 30px rgba(var(--nb-accent-rgb), .65), inset 0 0 18px rgba(var(--nb-accent-rgb), .4) !important; }
+.osdControls .btnPause:active { transform: scale(.94); }
+.osdControls .btnPause .material-icons::before { font-size: 1.3rem; }
+.osdControls .paper-icon-button-light:not(.btnPause) { background: transparent !important; color: #e8edff; transition: color .2s, transform .2s var(--nb-ease); }
+.osdControls .paper-icon-button-light:not(.btnPause):hover { color: var(--nb-accent) !important; transform: scale(1.14); }
+.osdControls .paper-icon-button-light:not(.btnPause):active { transform: scale(.92); }
+.videoOsdBottom .osdControls { animation: nb-rise .4s var(--nb-ease) backwards; }
+.sliderBubble { background: rgba(var(--nb-bg1-rgb), .95) !important; border: 1px solid var(--nb-line); border-radius: 10px; font-family: var(--nb-font-body); }
+
+/* ====================================================================
+   Pantalla de login y seleccion de usuario (sin verificar en pantalla: requiere cerrar sesion)
+   ==================================================================== */
+.standalonePage { background: transparent !important; }
+.loginPage .readOnlyContent, .loginPage .manualLoginForm, .loginPage .selectUserPage, .standalonePage .padded-left.padded-right:has(.manualLoginForm) {
+  background: rgba(var(--nb-surf-rgb), .5); border: 1px solid var(--nb-line); border-radius: 26px; padding: 2em 2.2em;
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); box-shadow: 0 30px 80px rgba(0,0,0,.5); max-width: 440px; margin: 8vh auto 0; animation: nb-rise .6s var(--nb-ease) backwards;
+}
+.loginPage h1, .loginPage h2, .loginPage .sectionTitle, .manualLoginForm h1, .manualLoginForm h2 { font-family: var(--nb-font-head) !important; font-weight: 800; text-align: center; font-size: 1.6em; margin-bottom: 1em; }
+.loginPage .inputContainer, .manualLoginForm .inputContainer { margin-bottom: 1em; }
+.loginPage .emby-input, .manualLoginForm .emby-input { padding: .9em 1.1em !important; border-radius: 14px !important; }
+.loginPage .btnSubmit, .manualLoginForm .btnSubmit { width: 100%; padding: .95em 1.4em !important; font-size: 1.02em; }
+.loginPage .btnQuick, .loginPage .btnForgotPassword, .loginPage .btnManual, .loginPage .btnCancel, .manualLoginForm .btnQuick, .manualLoginForm .btnForgotPassword {
+  width: 100%; margin-top: .6em; background: rgba(var(--nb-surf-rgb), .6) !important; border: 1px solid var(--nb-line) !important; border-radius: 999px !important; color: var(--nb-text) !important; padding: .85em 1.2em; }
+.loginPage .btnQuick:hover, .loginPage .btnForgotPassword:hover, .loginPage .btnManual:hover { background: rgba(var(--nb-accent-rgb), .18) !important; }
+.loginPage .checkboxContainer, .manualLoginForm .checkboxContainer { color: var(--nb-muted); }
+.loginPage .card[data-type="User"] .cardImageContainer, .selectUserPage .cardImageContainer { border-radius: 50% !important; }
+.loginPage .card[data-type="User"]:hover .cardScalable, .selectUserPage .card:hover .cardScalable { box-shadow: 0 0 0 3px var(--nb-accent), 0 0 40px rgba(var(--nb-accent-rgb), .5) !important; }
+@media (max-width: 800px) { .loginPage .readOnlyContent, .loginPage .manualLoginForm { margin: 4vh 14px 0; padding: 1.5em 1.3em; } }
