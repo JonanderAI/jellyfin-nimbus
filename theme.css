@@ -1208,3 +1208,36 @@ html body .backgroundContainer, html body .backgroundContainer.withBackdrop { ba
 .material-icons.supervisor_account::before { content: "\f0c0"; }
 .material-icons.notifications_active::before { content: "\f0f3"; }
 .material-icons.search_off::before { content: "\f002"; }
+
+/* ====================================================================
+   Ficha de detalle v2: botones bajo el titulo/chips, datos en dos columnas, reparto y episodios
+   ==================================================================== */
+.itemDetailPage .detailRibbon { flex-direction: column !important; align-items: flex-start !important; justify-content: flex-start !important; height: auto !important; min-height: 107px; gap: .2em; }
+.itemDetailPage .detailRibbon .infoWrapper { flex: 0 0 auto !important; width: auto !important; max-width: 100%; }
+.itemDetailPage .detailRibbon .mainDetailButtons { margin: .55em 0 0 !important; flex-wrap: wrap; }
+.itemDetailPage .itemMiscInfo { display: flex; flex-wrap: wrap; gap: .5em; align-items: center; margin: 0 0 .3em; }
+.itemDetailPage .itemMiscInfo .mediaInfoItem { margin: 0 !important; }
+
+/* Pistas de audio / subtitulos: etiqueta encima, en fila */
+.itemDetailPage .trackSelections { display: flex; flex-wrap: wrap; gap: .8em 1.4em; margin-bottom: 1.2em; }
+.itemDetailPage .trackSelections .selectContainer { flex: 1 1 230px; max-width: 320px; margin: 0 !important; }
+.itemDetailPage .trackSelections .selectLabel { color: var(--nb-muted); font-size: .8em; letter-spacing: .08em; text-transform: uppercase; }
+
+/* Datos (director, estudios, generos...) en dos columnas */
+.itemDetailPage .detailsGroupItem, .itemDetailPage .itemDetailsGroup > div { display: grid; grid-template-columns: 9em 1fr; column-gap: 1em; padding: .45em 0; border-bottom: 1px solid var(--nb-line); align-items: baseline; }
+.itemDetailPage .detailsGroupItem .label, .itemDetailPage .itemDetailsGroup .label { color: var(--nb-muted); }
+.itemDetailPage .detailsGroupItem .content, .itemDetailPage .itemDetailsGroup .content { color: var(--nb-text); font-weight: 600; }
+.itemDetailPage .detailsGroupItem a, .itemDetailPage .itemDetailsGroup a { color: var(--nb-accent); text-decoration: none; }
+.itemDetailPage .itemExternalLinks a { display: inline-block; padding: .2em .8em; border: 1px solid var(--nb-line); border-radius: 999px; margin: 0 .4em .4em 0; color: var(--nb-text); background: rgba(var(--nb-surf-rgb), .5); }
+.itemDetailPage .itemExternalLinks a:hover { border-color: var(--nb-accent); }
+
+/* Secciones inferiores (reparto, similares, episodios) con el mismo margen y tarjetas redondeadas */
+.itemDetailPage .detailPageSecondaryContainer { padding-left: 0 !important; }
+.itemDetailPage .detailVerticalSection .sectionTitle { padding-left: var(--nb-gutter) !important; margin-top: .8em; }
+.itemDetailPage .detailVerticalSection .emby-scroller { padding-left: var(--nb-gutter) !important; padding-right: var(--nb-gutter) !important; margin-left: 0 !important; margin-right: 0 !important; }
+.itemDetailPage .card[data-type="Person"] .cardScalable { border-radius: 50% !important; aspect-ratio: 1 / 1; }
+.itemDetailPage .card[data-type="Person"] .cardPadder { padding-bottom: 100% !important; }
+.itemDetailPage .card[data-type="Person"] .cardImageContainer { border-radius: 50% !important; background-position: center 20%; }
+.itemDetailPage .card[data-type="Person"] .cardText { text-align: center !important; }
+.itemDetailPage .detailVerticalSection .sectionTitle, .itemDetailPage .emby-scroller { animation: nb-rise .55s var(--nb-ease) backwards; }
+@media (max-width: 800px) { .itemDetailPage .detailRibbon { padding-left: 3.3% !important; } .itemDetailPage .detailsGroupItem { grid-template-columns: 7em 1fr; } }
