@@ -4,7 +4,7 @@
  */
 (function () {
   'use strict';
-  var ROTATE_MS = 12000;
+  var ROTATE_MS = 10000; // el hero cambia cada 10 s
   var timer = null;
 
   function api() { return window.ApiClient; }
@@ -33,7 +33,11 @@
 
   function render(hero, items, i) {
     var it = items[i];
-    hero.style.backgroundImage = 'url("' + backdropUrl(it) + '")';
+    var url = backdropUrl(it);
+    var pre = new Image();
+    pre.onload = function () { hero.style.backgroundImage = 'url("' + url + '")'; };
+    pre.src = url;
+    if (hero.querySelector('.nb-hero-title').textContent === '') hero.style.backgroundImage = 'url("' + url + '")';
     hero.querySelector('.nb-hero-title').textContent = it.Name;
     hero.querySelector('.nb-hero-meta').textContent = fmtMeta(it);
     hero.querySelector('.nb-hero-play').setAttribute('href', '#/details?id=' + it.Id);
