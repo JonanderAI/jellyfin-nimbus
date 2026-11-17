@@ -716,3 +716,44 @@ html.nb-no-anim *, html.nb-no-anim *::before, html.nb-no-anim *::after { animati
 
 /* El hero se alinea con el margen de las filas */
 .nb-hero { margin-left: 3.3% !important; margin-right: 3.3% !important; }
+
+/* ---------- Sin subrayado ni borde inferior al pasar el raton ---------- */
+a, a:hover, a:focus, a:active, button:hover, .emby-button:hover, .textActionButton, .textActionButton:hover,
+.cardText a, .cardText a:hover, .sectionTitleTextButton, .sectionTitleTextButton:hover, .sectionTitleTextButton:hover .sectionTitle,
+.MuiButton-root:hover, .MuiLink-root:hover, .itemAction:hover, .listItemBodyText a:hover { text-decoration: none !important; }
+.cardText a:hover, .textActionButton:hover, .sectionTitleTextButton:hover, .emby-tab-button:hover, .emby-tab-button-active { border-bottom-color: transparent !important; box-shadow: none; }
+.emby-tab-button::after, .emby-tab-button-active::after { display: none !important; }
+
+/* ---------- Menu superior: degradado que se desvanece (sin corte) ---------- */
+header.MuiAppBar-root { background: transparent !important; border-bottom: 0 !important; box-shadow: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+html.nb-scrolled header.MuiAppBar-root { background: transparent !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; border-bottom: 0 !important; }
+header.MuiAppBar-root::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; bottom: -36px; z-index: -1; pointer-events: none; opacity: .55;
+  background: linear-gradient(180deg, rgba(7,10,28,.92) 0%, rgba(7,10,28,.6) 55%, rgba(7,10,28,0) 100%);
+  transition: opacity .3s;
+}
+html.nb-scrolled header.MuiAppBar-root::before {
+  opacity: 1; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%); mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+}
+
+/* ---------- Iconos de la derecha: sencillos, sin circulo; Moonfin del mismo color ---------- */
+header .MuiToolbar-root .MuiIconButton-root, header .headerMoonfinButton, .nb-cust-btn {
+  background: transparent !important; border: 0 !important; box-shadow: none !important;
+  width: 36px !important; height: 36px !important; margin-left: 4px !important; color: #cdd6ff !important;
+}
+header .MuiToolbar-root .MuiIconButton-root:hover, header .headerMoonfinButton:hover, .nb-cust-btn:hover {
+  background: transparent !important; border: 0 !important; color: #fff !important; transform: scale(1.12);
+}
+header .headerMoonfinButton img { filter: brightness(0) invert(1); opacity: .82; transition: opacity .2s; }
+header .headerMoonfinButton:hover img { opacity: 1; }
+
+/* ---------- Menu superior: proporciones (la altura de la barra no cambia) ---------- */
+header .MuiToolbar-root { align-items: center; gap: 4px; }
+header .MuiButton-root { font-size: .95rem !important; padding: .4em 1.15em !important; line-height: 1.4; }
+header .MuiButton-root:first-of-type { font-size: 1.15rem !important; padding-left: .6em !important; }
+header .MuiButton-root:first-of-type img, header .MuiButton-root:first-of-type svg { height: 30px; width: auto; }
+header .MuiButton-root .MuiSvgIcon-root, header .MuiButton-root .material-icons { font-size: 1.15rem; margin-right: .1em; }
+header .MuiToolbar-root .MuiIconButton-root svg { width: 22px; height: 22px; }
+header .headerMoonfinButton img { width: 22px; height: 22px; }
+header .MuiToolbar-root div:has(> img) { width: 34px; height: 34px; margin-left: 10px; }
