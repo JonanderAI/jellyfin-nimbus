@@ -1,34 +1,34 @@
-# Nimbus para Jellyfin
+# Nimbus for Jellyfin
 
-Tema oscuro azul noche con brillo cian, tarjetas con zoom, botones degradados, fondo animado, hero destacado y panel de personalización. Funciona en PC, móvil y TV.
+A deep-night-blue theme for Jellyfin Web with a cyan glow: zoomable cards, gradient buttons, animated background, featured hero banner and a built-in customization panel. Works on desktop, mobile and TV.
 
-> Probado en Jellyfin Web 10.11 / 12.x (cabecera Material UI). Las apps nativas que no usan Jellyfin Web (Swiftfin, Infuse) no aplican CSS.
+> Tested on Jellyfin Web 10.11 / 12.x (Material UI header). Native apps that do not use Jellyfin Web (Swiftfin, Infuse) ignore custom CSS.
 
-## Instalación (una sola vez, se actualiza solo)
+## Install (once, then it updates itself)
 
-Los archivos se sirven desde GitHub Pages, que refresca su caché cada 10 minutos, así que **no hay que cambiar nada cuando se publican mejoras**.
+Files are served from GitHub Pages, which refreshes its cache every 10 minutes, so **you never need to change anything when improvements are published**.
 
-**1. CSS.** En Jellyfin: Panel → General → CSS personalizado:
+**1. CSS.** In Jellyfin: Dashboard → General → Custom CSS code:
 
 ```css
 @import url("https://jonanderai.github.io/jellyfin-nimbus/theme.css");
 ```
 
-**2. JavaScript (opcional pero recomendado).** El hero del Inicio, las imágenes de las bibliotecas, el texto de episodios, los sonidos y el panel de personalización necesitan JavaScript. Instala el plugin **JavaScript Injector** (necesita el plugin File Transformation) y añade este script:
+**2. JavaScript (optional but recommended).** The home hero, library images, episode labels, sounds and the customization panel need JavaScript. Install the **JavaScript Injector** plugin (it requires the File Transformation plugin) and add this script:
 
 ```js
 const s=document.createElement('script');s.src='https://jonanderai.github.io/jellyfin-nimbus/hero.js';document.head.appendChild(s);
 ```
 
-Después recarga con Ctrl+F5.
+Then hard-reload with Ctrl+F5.
 
-## Panel de personalización
+## Customization panel
 
-El icono de paleta de la barra superior abre un panel con acentos, fuentes, zoom y redondeo de tarjetas, y interruptores para el hero, el fondo animado, las animaciones y los sonidos. Los ajustes se guardan **por navegador y dispositivo** (`localStorage`).
+The palette icon in the top bar opens a panel with accent colors, fonts, card zoom and corner radius, plus switches for the hero, animated background, animations and sounds. Settings are saved **per browser and device** (`localStorage`).
 
-## Variantes opcionales (CSS)
+## Optional variants (CSS)
 
-Importa cada una **después** de `theme.css`:
+Import each one **after** `theme.css`:
 
 ```css
 @import url("https://jonanderai.github.io/jellyfin-nimbus/accents/rosa.css");
@@ -36,32 +36,32 @@ Importa cada una **después** de `theme.css`:
 @import url("https://jonanderai.github.io/jellyfin-nimbus/rows/wide.css");
 ```
 
-| Tipo | Archivos |
+| Type | Files |
 |---|---|
-| Acento | `accents/rosa.css`, `ambar.css`, `menta.css`, `violeta.css` |
-| Fuente | `fonts/magica.css` (Outfit), `cine.css` (Cinzel), `tech.css` (Sora), `familiar.css` (Fredoka) |
-| Fila | `rows/wide.css` (apaisada), `top.css` (Top numerado), `compact.css` (lista compacta) |
+| Accent | `accents/rosa.css`, `ambar.css`, `menta.css`, `violeta.css` |
+| Font | `fonts/magica.css` (Outfit), `cine.css` (Cinzel), `tech.css` (Sora), `familiar.css` (Fredoka) |
+| Row | `rows/wide.css` (landscape), `top.css` (numbered Top), `compact.css` (compact list) |
 
-Las filas y los acentos del panel conviven con estos archivos; si usas el panel, no necesitas los de acento ni fuente.
+If you use the panel you do not need the accent or font files.
 
-## Personalizar a mano
+## Manual tweaks
 
-Variables en `:root`: `--nb-accent`, `--nb-accent-2`, `--nb-accent-rgb` (los tres juntos), `--nb-bg-0`, `--nb-radius`, `--nb-card-zoom`.
+Variables on `:root`: `--nb-accent`, `--nb-accent-2`, `--nb-accent-rgb` (set the three together), `--nb-bg-0`, `--nb-radius`, `--nb-card-zoom`.
 
-## Sonidos
+## Sounds
 
-Son tonos suaves sintetizados (sin archivos). Se desactivan en el panel o con `localStorage.setItem('nb-sound','off')`.
+Soft synthesized tones (no audio files). Turn them off in the panel or with `localStorage.setItem('nb-sound','off')`.
 
-## Versiones fijas
+## Pinned versions
 
-Si prefieres congelar una versión, usa jsDelivr con etiqueta, por ejemplo `https://cdn.jsdelivr.net/gh/JonanderAI/jellyfin-nimbus@v1.1.1/theme.css`. Las etiquetas no se actualizan solas.
+To freeze a version, use jsDelivr with a tag, for example `https://cdn.jsdelivr.net/gh/JonanderAI/jellyfin-nimbus@v1.2.1/theme.css`. Tags never update on their own.
 
-## Solución de problemas
+## Troubleshooting
 
-- No veo cambios: Ctrl+F5. Los navegadores guardan el CSS; GitHub Pages tarda hasta 10 minutos en servir una versión nueva.
-- No sale el hero ni el panel: comprueba que el plugin JavaScript Injector está activo y el script guardado.
-- Con jsDelivr `@main` la caché puede tardar horas o días: usa GitHub Pages o una etiqueta.
+- Changes not showing: press Ctrl+F5. Browsers cache CSS, and GitHub Pages can take up to 10 minutes to serve a new version.
+- No hero or panel: make sure the JavaScript Injector plugin is active and the script is saved.
+- jsDelivr `@main` can be stale for hours or days: use GitHub Pages or a tag.
 
-## Créditos
+## Credits
 
-Iconos: Font Awesome 6 Free. Pósters de la maqueta: Blender Foundation (CC BY 3.0).
+Icons: Font Awesome 6 Free. Mockup posters: Blender Foundation (CC BY 3.0).

@@ -757,3 +757,15 @@ header .MuiButton-root .MuiSvgIcon-root, header .MuiButton-root .material-icons 
 header .MuiToolbar-root .MuiIconButton-root svg { width: 22px; height: 22px; }
 header .headerMoonfinButton img { width: 22px; height: 22px; }
 header .MuiToolbar-root div:has(> img) { width: 34px; height: 34px; margin-left: 10px; }
+
+/* ---------- Moonfin: mismo tamano y color que el resto de iconos (la mascara la prepara hero.js) ---------- */
+header .headerMoonfinButton[data-nb-mf] img { opacity: 0 !important; position: absolute !important; width: 1px !important; height: 1px !important; filter: none !important; }
+header .headerMoonfinButton[data-nb-mf]::before { content: ""; display: block; width: 20px; height: 20px; background-color: currentColor; -webkit-mask: var(--nb-mf) center / contain no-repeat; mask: var(--nb-mf) center / contain no-repeat; }
+
+/* ---------- Hero: tope de altura en pantallas muy anchas y mas aire debajo ---------- */
+.nb-hero { max-height: clamp(300px, 46vh, 560px) !important; margin-bottom: 2.4em !important; }
+@media (max-width: 800px) { .nb-hero { margin-bottom: 1.6em !important; } }
+
+/* ---------- Nombre del servidor y logo ---------- */
+header .MuiButton-root:first-of-type { text-shadow: 0 0 18px rgba(var(--nb-accent-rgb), .45); }
+header .MuiButton-root:first-of-type img, header .MuiButton-root:first-of-type svg { filter: drop-shadow(0 0 8px rgba(var(--nb-accent-rgb), .5)); }

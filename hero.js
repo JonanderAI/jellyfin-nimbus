@@ -278,8 +278,19 @@
     });
   }
 
+  // Icono de Moonfin: se pinta con mascara para que tenga el mismo color que el resto
+  function moonfin() {
+    var b = document.querySelector('header .headerMoonfinButton');
+    if (!b || b.getAttribute('data-nb-mf')) return;
+    var img = b.querySelector('img');
+    if (!img || !img.src) return;
+    b.setAttribute('data-nb-mf', '1');
+    b.style.setProperty('--nb-mf', 'url("' + img.src + '")');
+  }
+
   function tick() {
     markNav();
+    moonfin();
     ensureBtn();
     if (!api() || !isHome()) { episodes(); return; }
     var page = pageEl();
