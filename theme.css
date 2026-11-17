@@ -769,3 +769,10 @@ header .headerMoonfinButton[data-nb-mf]::before { content: ""; display: block; w
 /* ---------- Nombre del servidor y logo ---------- */
 header .MuiButton-root:first-of-type { text-shadow: 0 0 18px rgba(var(--nb-accent-rgb), .45); }
 header .MuiButton-root:first-of-type img, header .MuiButton-root:first-of-type svg { filter: drop-shadow(0 0 8px rgba(var(--nb-accent-rgb), .5)); }
+
+/* ---------- Hero a todo el ancho: altura por ancho de pantalla, sin aspect-ratio ----------
+   (aspect-ratio + max-height recortaba tambien el ancho en pantallas muy anchas) */
+.nb-hero { aspect-ratio: auto !important; max-height: none !important; min-height: 0 !important; width: auto !important; max-width: none !important; height: clamp(300px, 36vw, 560px) !important; }
+@media (max-width: 1100px) { .nb-hero { height: clamp(280px, 46vw, 520px) !important; } }
+@media (max-width: 800px) { .nb-hero { height: clamp(240px, 70vw, 380px) !important; } }
+.layout-tv .nb-hero { height: clamp(360px, 36vw, 560px) !important; }
