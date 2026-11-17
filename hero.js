@@ -7,6 +7,20 @@
   var ROTATE_MS = 10000; // el hero cambia cada 10 s
   var timer = null;
 
+  // ---- Idioma: castellano si el navegador/Jellyfin esta en espanol, ingles en el resto ----
+  var LANG = /^es/i.test(document.documentElement.lang || navigator.language || 'en') ? 'es' : 'en';
+  var I18N = {
+    es: { play: 'Reproducir', myList: 'Mi lista', season: 'Temporada', episode: 'Episodio', customize: 'Personalizar', close: 'Cerrar', customizeTheme: 'Personalizar tema',
+      accent: 'Color de acento', accent1: 'Acento 1', accent2: 'Acento 2', font: 'Fuente', cards: 'Tarjetas', zoom: 'Zoom al pasar', radius: 'Redondeo', options: 'Opciones',
+      showHero: 'Mostrar hero del Inicio', bgAnim: 'Fondo animado', anim: 'Animaciones', sounds: 'Sonidos', reset: 'Restablecer valores', saved: 'Se guarda en este dispositivo.',
+      fDefault: 'Actual', fMagic: 'Mágica', fCinema: 'Cine', fTech: 'Tech', fFamily: 'Familiar' },
+    en: { play: 'Play', myList: 'My list', season: 'Season', episode: 'Episode', customize: 'Customize', close: 'Close', customizeTheme: 'Customize theme',
+      accent: 'Accent color', accent1: 'Accent 1', accent2: 'Accent 2', font: 'Font', cards: 'Cards', zoom: 'Hover zoom', radius: 'Corner radius', options: 'Options',
+      showHero: 'Show home hero', bgAnim: 'Animated background', anim: 'Animations', sounds: 'Sounds', reset: 'Reset to defaults', saved: 'Saved on this device.',
+      fDefault: 'Default', fMagic: 'Magic', fCinema: 'Cinema', fTech: 'Tech', fFamily: 'Family' }
+  };
+  function tr(k) { return (I18N[LANG] && I18N[LANG][k]) || I18N.en[k] || k; }
+
   function api() { return window.ApiClient; }
 
   function isHome() {
@@ -73,8 +87,8 @@
     hero.innerHTML =
       '<div class="nb-hero-shade"></div><div class="nb-hero-body">' +
       '<img class="nb-hero-logo" alt=""><div class="nb-hero-title"></div><div class="nb-hero-meta"></div>' +
-      '<div class="nb-hero-actions"><a class="nb-hero-play" href="#"><span class="material-icons play_arrow" aria-hidden="true"></span>Reproducir</a>' +
-      '<a class="nb-hero-fav" href="#"><span class="material-icons add" aria-hidden="true"></span>Mi lista</a></div></div>';
+      '<div class="nb-hero-actions"><a class="nb-hero-play" href="#"><span class="material-icons play_arrow" aria-hidden="true"></span>' + tr('play') + '</a>' +
+      '<a class="nb-hero-fav" href="#"><span class="material-icons add" aria-hidden="true"></span>' + tr('myList') + '</a></div></div>';
     container.parentNode.insertBefore(hero, container);
     // clic en cualquier parte del hero abre la ficha del titulo mostrado
     hero.addEventListener('click', function (e) {
@@ -128,7 +142,7 @@
   }
 
   // "S1:E4 - Titulo" -> "Temporada 1 · Episodio 4" + titulo en otro tono
-  var L = window.NB_LABELS || { season: 'Temporada', episode: 'Episodio' };
+  var L = window.NB_LABELS || { season: tr('season'), episode: tr('episode') };
   var EP = /^S(\d+):E(\d+(?:-\d+)?)\s*-\s*(.+)$/;
   function episodes(root) {
     (root || document).querySelectorAll('.cardText:not([data-nb-ep])').forEach(function (el) {
@@ -143,18 +157,18 @@
   }
   var obsT = null;
   new MutationObserver(function () {
-    clearTimeout(obsT); obsT = setTimeout(function () { episodes(); }, 150);
+    clearTimeout(obsT); obsT = setTimeout(function () { episodes(); userMenu(); }, 100);
   }).observe(document.body, { childList: true, subtree: true });
 
   // ---- Personalizacion: se guarda en localStorage (por dispositivo/navegador) ----
   var KEY = 'nb-settings';
   var DEF = { a1: '#4cc9ff', a2: '#7a7bff', font: 0, zoom: 1.06, radius: 14, hero: true, bgAnim: true, anim: true, sound: true };
   var FONTS = [
-    ['Actual', 'Plus Jakarta Sans', 'Geist', 'family=Geist:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800'],
-    ['Mágica', 'Outfit', 'Figtree', 'family=Outfit:wght@500;600;700;800&family=Figtree:wght@400;500;600'],
-    ['Cine', 'Cinzel', 'DM Sans', 'family=Cinzel:wght@600;700;800&family=DM+Sans:wght@400;500;600'],
-    ['Tech', 'Sora', 'DM Sans', 'family=Sora:wght@600;700;800&family=DM+Sans:wght@400;500;600'],
-    ['Familiar', 'Fredoka', 'Figtree', 'family=Fredoka:wght@500;600;700&family=Figtree:wght@400;500;600']
+    [tr('fDefault'), 'Plus Jakarta Sans', 'Geist', 'family=Geist:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800'],
+    [tr('fMagic'), 'Outfit', 'Figtree', 'family=Outfit:wght@500;600;700;800&family=Figtree:wght@400;500;600'],
+    [tr('fCinema'), 'Cinzel', 'DM Sans', 'family=Cinzel:wght@600;700;800&family=DM+Sans:wght@400;500;600'],
+    [tr('fTech'), 'Sora', 'DM Sans', 'family=Sora:wght@600;700;800&family=DM+Sans:wght@400;500;600'],
+    [tr('fFamily'), 'Fredoka', 'Figtree', 'family=Fredoka:wght@500;600;700&family=Figtree:wght@400;500;600']
   ];
   var PRESETS = [['#4cc9ff', '#7a7bff'], ['#ff7ac8', '#a78bff'], ['#ffbe5a', '#ff7a59'], ['#6ee6aa', '#4cc9ff'], ['#b794ff', '#ff7ac8']];
   function loadS() { try { return Object.assign({}, DEF, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { return Object.assign({}, DEF); } }
@@ -185,7 +199,7 @@
     if (p) return p;
     p = document.createElement('aside');
     p.className = 'nb-panel';
-    p.innerHTML = '<div class="nb-panel-head"><b>Personalizar</b><button class="nb-x" aria-label="Cerrar">✕</button></div><div class="nb-panel-body"></div>';
+    p.innerHTML = '<div class="nb-panel-head"><b>' + tr('customize') + '</b><button class="nb-x" aria-label="' + tr('close') + '">✕</button></div><div class="nb-panel-body"></div>';
     var body = p.querySelector('.nb-panel-body');
     function sec(t) {
       var d = document.createElement('div'); d.className = 'nb-sec';
@@ -198,7 +212,7 @@
       r.appendChild(s); r.appendChild(ctrl); parent.appendChild(r); return r;
     }
     // Colores
-    var c = sec('Color de acento'), sw = document.createElement('div'); sw.className = 'nb-swatches';
+    var c = sec(tr('accent')), sw = document.createElement('div'); sw.className = 'nb-swatches';
     PRESETS.forEach(function (pr) {
       var b = document.createElement('button'); b.className = 'nb-sw'; b.setAttribute('aria-label', pr[0]);
       b.style.background = 'linear-gradient(135deg,' + pr[0] + ',' + pr[1] + ')';
@@ -207,14 +221,14 @@
       sw.appendChild(b);
     });
     c.appendChild(sw);
-    [['Acento 1', 'a1'], ['Acento 2', 'a2']].forEach(function (k) {
+    [[tr('accent1'), 'a1'], [tr('accent2'), 'a2']].forEach(function (k) {
       var i = document.createElement('input'); i.type = 'color';
       i.oninput = function () { S[k[1]] = i.value; applyS(); saveS(); syncFns.forEach(function (fn) { if (fn !== sync) fn(); }); };
       var sync = function () { i.value = S[k[1]]; };
       syncFns.push(sync); row(c, k[0], i);
     });
     // Fuente
-    var f = sec('Fuente'), fw = document.createElement('div'); fw.className = 'nb-chips';
+    var f = sec(tr('font')), fw = document.createElement('div'); fw.className = 'nb-chips';
     FONTS.forEach(function (ft, idx) {
       var b = document.createElement('button'); b.className = 'nb-chip'; b.textContent = ft[0];
       b.onclick = function () { S.font = idx; commit(); };
@@ -223,7 +237,7 @@
     });
     f.appendChild(fw);
     // Tarjetas
-    var t = sec('Tarjetas');
+    var t = sec(tr('cards'));
     function slider(label, key, min, max, step, fmt) {
       var i = document.createElement('input'); i.type = 'range'; i.min = min; i.max = max; i.step = step;
       var v = document.createElement('em');
@@ -232,20 +246,20 @@
       syncFns.push(function () { i.value = S[key]; v.textContent = fmt(S[key]); });
       row(t, label, wrap);
     }
-    slider('Zoom al pasar', 'zoom', 1, 1.15, 0.01, function (x) { return x.toFixed(2) + 'x'; });
-    slider('Redondeo', 'radius', 4, 26, 1, function (x) { return x + ' px'; });
+    slider(tr('zoom'), 'zoom', 1, 1.15, 0.01, function (x) { return x.toFixed(2) + 'x'; });
+    slider(tr('radius'), 'radius', 4, 26, 1, function (x) { return x + ' px'; });
     // Opciones
-    var o = sec('Opciones');
-    [['Mostrar hero del Inicio', 'hero'], ['Fondo animado', 'bgAnim'], ['Animaciones', 'anim'], ['Sonidos', 'sound']].forEach(function (k) {
+    var o = sec(tr('options'));
+    [[tr('showHero'), 'hero'], [tr('bgAnim'), 'bgAnim'], [tr('anim'), 'anim'], [tr('sounds'), 'sound']].forEach(function (k) {
       var i = document.createElement('input'); i.type = 'checkbox'; i.className = 'nb-switch';
       i.onchange = function () { S[k[1]] = i.checked; commit(); };
       syncFns.push(function () { i.checked = !!S[k[1]]; });
       row(o, k[0], i);
     });
-    var rb = document.createElement('button'); rb.className = 'nb-reset'; rb.textContent = 'Restablecer valores';
+    var rb = document.createElement('button'); rb.className = 'nb-reset'; rb.textContent = tr('reset');
     rb.onclick = function () { S = Object.assign({}, DEF); commit(); };
     body.appendChild(rb);
-    var note = document.createElement('div'); note.className = 'nb-note'; note.textContent = 'Se guarda en este dispositivo.';
+    var note = document.createElement('div'); note.className = 'nb-note'; note.textContent = tr('saved');
     body.appendChild(note);
     p.querySelector('.nb-x').onclick = function () { p.classList.remove('nb-open'); };
     document.body.appendChild(p);
@@ -253,14 +267,43 @@
     return p;
   }
 
+  // "Personalizar tema" dentro del menu del avatar (junto a Perfil / Ajustes)
+  function userMenu() {
+    var papers = document.querySelectorAll('.MuiMenu-paper');
+    papers.forEach(function (paper) {
+      if (paper.querySelector('.nb-menu-cust')) return;
+      var prefs = paper.querySelector('[role="menuitem"][href*="mypreferences"], [role="menuitem"][href*="preferences"]');
+      var profile = paper.querySelector('[role="menuitem"][href*="userprofile"]');
+      var ref = prefs || profile;
+      if (!ref) return;
+      var item = ref.cloneNode(true);
+      item.classList.add('nb-menu-cust');
+      item.removeAttribute('href');
+      item.querySelectorAll('.MuiTouchRipple-root').forEach(function (n) { n.remove(); });
+      var icon = item.querySelector('.MuiListItemIcon-root');
+      if (icon) { icon.innerHTML = '<span class="material-icons palette" aria-hidden="true"></span>'; }
+      var txt = item.querySelector('.MuiListItemText-primary');
+      if (txt) txt.textContent = tr('customizeTheme');
+      item.addEventListener('click', function (e) {
+        e.preventDefault(); e.stopPropagation();
+        var bd = document.querySelector('.MuiPopover-root .MuiBackdrop-root');
+        if (bd) bd.click();
+        else document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+        setTimeout(function () { buildPanel().classList.add('nb-open'); }, 120);
+      });
+      ref.insertAdjacentElement('afterend', item);
+    });
+  }
+
   function ensureBtn() {
+    return; // sustituido por userMenu(): el icono ya no va en la barra
     if (document.querySelector('.nb-cust-btn')) return;
     var btns = [].slice.call(document.querySelectorAll('header .MuiToolbar-root .MuiIconButton-root')).filter(function (b) { return b.querySelector('svg'); });
     var last = btns[btns.length - 1];
     if (!last) return;
     var b = document.createElement('button');
     b.className = 'MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeLarge nb-cust-btn';
-    b.setAttribute('aria-label', 'Personalizar tema'); b.setAttribute('title', 'Personalizar tema');
+    b.setAttribute('aria-label', tr('customizeTheme')); b.setAttribute('title', tr('customizeTheme'));
     b.innerHTML = '<span class="material-icons palette" aria-hidden="true"></span>';
     b.onclick = function (e) { e.stopPropagation(); buildPanel().classList.toggle('nb-open'); };
     last.insertAdjacentElement('afterend', b);
@@ -313,6 +356,7 @@
     moonfin();
     brandLogo();
     ensureBtn();
+    userMenu();
     if (!api() || !isHome()) { episodes(); return; }
     var page = pageEl();
     if (page) { build(page); libs(page); }

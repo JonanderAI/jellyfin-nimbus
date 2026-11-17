@@ -860,3 +860,57 @@ header .MuiButton-root:hover, header .MuiButton-root.nb-active:hover { backgroun
 header .MuiButton-root.nb-active:hover { background: linear-gradient(135deg, rgba(var(--nb-accent-rgb),.28), rgba(122,123,255,.28)) !important; }
 header .MuiToolbar-root .MuiIconButton-root:hover, header .headerMoonfinButton:hover, .nb-cust-btn:hover { background: transparent !important; color: #fff !important; transform: none !important; }
 header .MuiTouchRipple-root { display: none !important; }
+
+/* ---------- Moonfin: el icono llena toda la caja, asi que se reduce para igualar a los glifos de 22px ---------- */
+header .headerMoonfinButton[data-nb-mf]::before { width: 17px !important; height: 17px !important; }
+/* Elemento "Personalizar tema" del menu del avatar */
+.nb-menu-cust { cursor: pointer; }
+.nb-menu-cust .material-icons.palette::before { font-size: 1.15rem !important; color: var(--nb-accent); }
+
+/* ====================================================================
+   Hojas de accion / menus contextuales (tarjetas, "mas"...): iconos alineados
+   ==================================================================== */
+.actionSheetMenuItem { display: flex !important; align-items: center; gap: .9em; padding: .62em 1em !important; border-radius: 10px; color: var(--nb-text); }
+.actionSheetMenuItem .actionsheetMenuItemIcon, .actionSheetMenuItem .listItemIcon {
+  width: 1.5rem !important; height: 1.5rem !important; min-width: 1.5rem !important; flex: 0 0 1.5rem !important; margin: 0 !important; padding: 0 !important;
+  display: inline-flex !important; align-items: center; justify-content: center; color: var(--nb-accent) !important; font-size: 1.35rem; line-height: 1;
+}
+.actionSheetMenuItem .actionsheetListItemBody, .actionSheetMenuItem .listItemBody { padding: 0 !important; margin: 0 !important; }
+.actionSheetMenuItem .actionSheetItemText { font-size: .95rem; text-align: left; }
+.actionSheet .actionSheetScroller { padding: 8px 6px; }
+
+/* Iconos extra usados en estos menus */
+.material-icons.select_all, .material-icons.content_copy, .material-icons.image, .material-icons.add_circle_outline, .material-icons.visibility_off, .material-icons.link, .material-icons.open_in_new, .material-icons.playlist_play, .material-icons.queue {
+  font-size: 0 !important; line-height: 1 !important; display: inline-flex; align-items: center; justify-content: center; width: 1.5rem; height: 1.5rem;
+}
+.material-icons.select_all::before, .material-icons.content_copy::before, .material-icons.image::before, .material-icons.add_circle_outline::before, .material-icons.visibility_off::before, .material-icons.link::before, .material-icons.open_in_new::before, .material-icons.playlist_play::before, .material-icons.queue::before {
+  font-family: "Font Awesome 6 Free" !important; font-weight: 900; font-style: normal; font-size: 1.15rem; line-height: 1;
+}
+.material-icons.select_all::before { content: "\f14a"; }
+.material-icons.content_copy::before { content: "\f0c5"; }
+.material-icons.image::before { content: "\f03e"; }
+.material-icons.add_circle_outline::before { content: "\f055"; }
+.material-icons.visibility_off::before { content: "\f070"; }
+.material-icons.link::before { content: "\f0c1"; }
+.material-icons.open_in_new::before { content: "\f35d"; }
+.material-icons.playlist_play::before { content: "\e068"; }
+.material-icons.queue::before { content: "\f0fe"; }
+
+/* ---------- Fondo animado: mas visible ---------- */
+html::before {
+  inset: -30%;
+  background: radial-gradient(38% 42% at 15% 8%, rgba(50,80,215,.95), transparent 70%),
+              radial-gradient(34% 38% at 88% 2%, rgba(105,60,225,.8), transparent 70%),
+              radial-gradient(40% 40% at 62% 100%, rgba(20,110,200,.55), transparent 70%),
+              radial-gradient(30% 34% at 40% 55%, rgba(var(--nb-accent-rgb),.22), transparent 72%);
+  animation: nb-breathe 11s ease-in-out infinite alternate;
+}
+@keyframes nb-breathe {
+  0% { transform: translate3d(-4%,-3%,0) scale(1); opacity: .75; }
+  50% { transform: translate3d(5%,4%,0) scale(1.18); opacity: 1; }
+  100% { transform: translate3d(-6%,6%,0) scale(1.32); opacity: .85; }
+}
+
+/* ---------- Logo y nombre mas juntos ---------- */
+header .MuiButton-root:first-of-type { gap: 0 !important; }
+header .MuiButton-root:first-of-type .MuiButton-startIcon { margin-right: .3em !important; margin-left: 0 !important; }
