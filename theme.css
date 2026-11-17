@@ -1081,3 +1081,26 @@ header .MuiButton-root:not(.nb-active):hover { letter-spacing: .01em; }
 header .MuiToolbar-root { min-height: 66px !important; padding-top: 10px !important; padding-bottom: 6px !important; align-items: center; }
 .mainAnimatedPage.libraryPage:not(.itemDetailPage) { margin-top: 18px; }
 .nb-hero { margin-top: .6em !important; }
+
+/* ====================================================================
+   Colecciones: sin el icono central de Jellyfin sobre la foto; icono delante del titulo
+   (mismo color y tamano que la letra); tarjetas mas bajas
+   ==================================================================== */
+.card[data-type="CollectionFolder"] .cardImageIcon, .card[data-type="CollectionFolder"] .cardPadder .material-icons, .card[data-type="CollectionFolder"] .cardPadder span { display: none !important; }
+.card[data-type="CollectionFolder"] .cardText a::before { font-size: 1em !important; color: inherit !important; margin-right: .5em !important; transform: none !important; vertical-align: baseline; }
+.homeSectionsContainer > .section0 .card[data-type="CollectionFolder"] .cardPadder { aspect-ratio: 21 / 6.2 !important; }
+@media (max-width: 800px) { .homeSectionsContainer > .section0 .card[data-type="CollectionFolder"] .cardPadder { aspect-ratio: 16 / 6.5 !important; } }
+
+/* ====================================================================
+   Margen lateral unico (hero, colecciones y todas las filas alineados)
+   ==================================================================== */
+:root { --nb-gutter: 3.3vw; }
+.nb-hero { margin-left: var(--nb-gutter) !important; margin-right: var(--nb-gutter) !important; }
+.homeSectionsContainer > .verticalSection .sectionTitleContainer, .homeSectionsContainer > .verticalSection > .sectionTitle { padding-inline: var(--nb-gutter) !important; }
+.homeSectionsContainer > .verticalSection .emby-scroller { padding-left: var(--nb-gutter) !important; padding-right: var(--nb-gutter) !important; margin-left: 0 !important; margin-right: 0 !important; }
+@media (min-width: 1100px) {
+  .homeSectionsContainer > .section1 .sectionTitleContainer, .homeSectionsContainer > .section1 > .sectionTitle { padding-inline: var(--nb-gutter) 0 !important; }
+  .homeSectionsContainer > .section1 .emby-scroller { padding-left: var(--nb-gutter) !important; padding-right: 0 !important; }
+  .homeSectionsContainer > .section5 .sectionTitleContainer, .homeSectionsContainer > .section5 > .sectionTitle { padding-inline: 24px 0 !important; }
+  .homeSectionsContainer > .section5 .emby-scroller { padding-left: 24px !important; padding-right: 0 !important; }
+}
