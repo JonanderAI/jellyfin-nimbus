@@ -49,9 +49,22 @@
     var it = items[i];
     var url = backdropUrl(it);
     var pre = new Image();
-    pre.onload = function () { hero.style.backgroundImage = 'url("' + url + '")'; hero.classList.remove('nb-hero-loading'); };
+    pre.onload = function () {
+      // fundido cruzado: la imagen nueva entra encima de la anterior
+      var layer = document.createElement('div');
+      layer.className = 'nb-hero-bg';
+      layer.style.backgroundImage = 'url("' + url + '")';
+      hero.insertBefore(layer, hero.querySelector('.nb-hero-shade'));
+      void layer.offsetWidth;
+      layer.classList.add('nb-in');
+      hero.classList.remove('nb-hero-loading');
+      setTimeout(function () {
+        var ls = hero.querySelectorAll('.nb-hero-bg');
+        for (var i = 0; i < ls.length - 1; i++) ls[i].remove();
+      }, 1200);
+    };
     pre.src = url;
-    if (hero.querySelector('.nb-hero-title').textContent === '') hero.style.backgroundImage = 'url("' + url + '")';
+
     hero.querySelector('.nb-hero-title').textContent = it.Name;
     // logo de la pelicula en lugar del titulo (si tiene)
     var logo = hero.querySelector('.nb-hero-logo');
@@ -85,7 +98,7 @@
     var hero = document.createElement('div');
     hero.className = 'nb-hero nb-hero-loading';
     hero.innerHTML =
-      '<div class="nb-hero-shade"></div><div class="nb-hero-body">' +
+      '<div class="nb-hero-shade"></div><div class="nb-hero-bar"><i></i></div><div class="nb-hero-body">' +
       '<img class="nb-hero-logo" alt=""><div class="nb-hero-title"></div><div class="nb-hero-meta"></div>' +
       '<div class="nb-hero-actions"><a class="nb-hero-play" href="#"><span class="material-icons play_arrow" aria-hidden="true"></span>' + tr('play') + '</a>' +
       '<a class="nb-hero-fav" href="#"><span class="material-icons add" aria-hidden="true"></span>' + tr('myList') + '</a></div></div>';

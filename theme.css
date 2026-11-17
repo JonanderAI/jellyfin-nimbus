@@ -933,3 +933,28 @@ header .MuiButton-root:first-of-type .MuiButton-startIcon { margin-right: .3em !
 /* Sin el boton grande de play sobre la miniatura al pasar el raton (queda el degradado y los botones pequenos) */
 .cardOverlayFab-primary, .cardOverlayButton.cardOverlayFab-primary { display: none !important; }
 .cardOverlayContainer { background: linear-gradient(0deg, rgba(var(--nb-bg-rgb), .75) 0%, rgba(var(--nb-bg-rgb), .0) 55%) !important; }
+
+/* ====================================================================
+   Hero: animaciones de carga
+   ==================================================================== */
+@keyframes nb-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes nb-drop { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+@keyframes nb-zoomin { from { opacity: 0; transform: scale(.985); } to { opacity: 1; transform: none; } }
+/* Capas de imagen con fundido cruzado y paneo lento */
+.nb-hero { animation: none !important; background-image: none !important; overflow: hidden; }
+.nb-hero.nb-hero-loading { animation: nb-skel 1.6s linear infinite, nb-zoomin .7s var(--nb-ease) backwards !important; }
+.nb-hero-bg { position: absolute; inset: 0; background-size: cover; background-position: 35% 30%; background-repeat: no-repeat; opacity: 0; transition: opacity 1s ease; animation: nb-kenburns 24s ease-in-out infinite alternate; }
+.nb-hero-bg.nb-in { opacity: 1; }
+.nb-hero-shade { z-index: 1; }
+.nb-hero-body { z-index: 2; }
+/* Contenido: entrada escalonada cada vez que cambia el titulo */
+.nb-hero-in .nb-hero-body { animation: none; }
+.nb-hero-in .nb-hero-logo, .nb-hero-in .nb-hero-title { animation: nb-rise .7s var(--nb-ease) .05s backwards; }
+.nb-hero-in .nb-hero-meta { animation: nb-rise .7s var(--nb-ease) .18s backwards; }
+.nb-hero-in .nb-hero-actions { animation: nb-rise .7s var(--nb-ease) .3s backwards; }
+/* Barra de progreso hasta el siguiente titulo */
+.nb-hero-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; z-index: 3; background: rgba(255,255,255,.08); pointer-events: none; }
+.nb-hero-bar i { display: block; height: 100%; transform-origin: left; transform: scaleX(0); background: linear-gradient(90deg, var(--nb-accent), var(--nb-accent-2)); }
+.nb-hero-in .nb-hero-bar i { animation: nb-bar 10s linear forwards; }
+/* Cabecera: entra deslizando */
+header.MuiAppBar-root { animation: nb-drop .7s var(--nb-ease) backwards; }
