@@ -467,7 +467,7 @@ a:hover { color: #9be3ff; }
 .detailLogo { filter: drop-shadow(0 4px 20px rgba(0,0,0,.6)); }
 /* ---------- Hero del Inicio (requiere hero.js) ---------- */
 .nb-hero { position: relative; margin: .6em 3.5% 0; height: 340px; border-radius: 24px; overflow: hidden; background: var(--nb-bg-2) center 30% / cover no-repeat; transition: background-image .6s; }
-.nb-hero-shade { position: absolute; inset: 0; background: linear-gradient(0deg, var(--nb-bg-0) 4%, transparent 70%), linear-gradient(90deg, rgba(7,10,28,.9), transparent 62%); }
+.nb-hero-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,10,28,.85), transparent 62%); }
 .nb-hero-body { position: absolute; left: 40px; bottom: 34px; right: 40px; max-width: 560px; }
 .nb-hero-title { font-family: var(--nb-font-head); font-weight: 800; font-size: 2.7em; letter-spacing: -.02em; line-height: 1.05; text-shadow: 0 2px 20px rgba(0,0,0,.5); }
 .nb-hero-meta { color: #b8c3ee; margin: .5em 0 1em; }
@@ -483,3 +483,14 @@ a:hover { color: #9be3ff; }
 /* Bibliotecas: fuente propia e imagen aleatoria (la pone hero.js) */
 .card[data-type="CollectionFolder"] .cardText { font-family: var(--nb-font-head) !important; text-align: left; }
 .card[data-type="CollectionFolder"] .cardImageContainer { background-position: center 25%; }
+
+/* Alineacion a la izquierda: titulos, subtitulos, descripciones */
+.cardText, .cardTextCentered, .cardText-first, .cardText-secondary,
+.card[data-type="CollectionFolder"] .cardText,
+.overview, .itemOverview, .tagline, .sectionTitle { text-align: left !important; }
+.cardFooter, .innerCardFooter { text-align: left; }
+/* Hover sin recortes (el contenedor de la fila recorta lo que sobresale) y bibliotecas mas grandes */
+.card:hover .cardScalable, .card:focus-visible .cardScalable { box-shadow: 0 0 0 3px var(--nb-accent), 0 10px 26px rgba(var(--nb-accent-rgb), .45) !important; }
+.card:hover .cardBox { transform: scale(1.05) translateY(-3px) !important; }
+.card[data-type="CollectionFolder"] { width: 24em !important; }
+@media (max-width: 800px) { .card[data-type="CollectionFolder"] { width: 16em !important; } }
