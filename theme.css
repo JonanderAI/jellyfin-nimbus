@@ -546,3 +546,13 @@ html::before {
 /* Episodios (los reescribe hero.js): "Temporada 1 · Episodio 4" y titulo en otro tono */
 .nb-ep-num { display: block; font-size: .92em; font-weight: 600; letter-spacing: .02em; color: #8fa3e8; }
 .nb-ep-name { display: block; color: #e6ebff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Botones sobre la miniatura (visto, favorito, mas, reproducir): tamano propio,
+   porque la sustitucion de iconos pone font-size:0 en el icono */
+.cardOverlayButton { width: 2.7rem !important; height: 2.7rem !important; padding: 0 !important; display: inline-flex !important; align-items: center; justify-content: center; border-radius: 50% !important; background: rgba(12,18,48,.72) !important; backdrop-filter: blur(8px); border: 1px solid var(--nb-line); color: #fff !important; transition: transform .2s, background .2s; }
+.cardOverlayButton:hover { background: rgba(var(--nb-accent-rgb), .28) !important; transform: scale(1.1); }
+.cardOverlayButton .material-icons, .cardOverlayButtonIcon { width: auto !important; height: auto !important; }
+.cardOverlayButtonIcon::before { font-size: 1.15rem !important; }
+.cardOverlayFab-primary { width: 3.8rem !important; height: 3.8rem !important; background: linear-gradient(135deg, var(--nb-accent), var(--nb-accent-2)) !important; color: #04101e !important; border: 0 !important; box-shadow: 0 8px 24px rgba(var(--nb-accent-rgb), .4); }
+.cardOverlayFab-primary .cardOverlayButtonIcon::before { font-size: 1.5rem !important; }
+.cardOverlayButton-br { padding: .5em; gap: .4em; }
