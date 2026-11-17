@@ -95,11 +95,63 @@
     });
   }
 
+  // "S1:E4 - Titulo" -> "Temporada 1 · Episodio 4" + titulo en otro tono
+  var L = window.NB_LABELS || { season: 'Temporada', episode: 'Episodio' };
+  var EP = /^S(\d+):E(\d+(?:-\d+)?)\s*-\s*(.+)$/;
+  function episodes(root) {
+    (root || document).querySelectorAll('.cardText:not([data-nb-ep])').forEach(function (el) {
+      var m = EP.exec((el.textContent || '').trim());
+      if (!m) return;
+      el.setAttribute('data-nb-ep', '1');
+      var a = document.createElement('span'), b = document.createElement('span');
+      a.className = 'nb-ep-num'; a.textContent = L.season + ' ' + m[1] + ' · ' + L.episode + ' ' + m[2];
+      b.className = 'nb-ep-name'; b.textContent = m[3];
+      el.textContent = ''; el.appendChild(a); el.appendChild(b);
+    });
+  }
+  var obsT = null;
+  new MutationObserver(function () {
+    clearTimeout(obsT); obsT = setTimeout(function () { episodes(); }, 150);
+  }).observe(document.body, { childList: true, subtree: true });
+
   function tick() {
-    if (!api() || !isHome()) return;
+    if (!api() || !isHome()) { episodes(); return; }
     var page = pageEl();
     if (page) { build(page); libs(page); }
+    episodes();
   }
+
+  // ---- Sonidos de interfaz (sintetizados, sin archivos). Desactivar: localStorage.setItem('nb-sound','off') ----
+  var actx = null, lastHover = 0;
+  function soundOn() { try { return localStorage.getItem('nb-sound') !== 'off'; } catch (e) { return true; } }
+  function playing() { var v = document.querySelector('video'); return v && !v.paused; }
+  function blip(freq, dur, vol, type, slideTo) {
+    if (!actx || !soundOn() || playing()) return;
+    var t = actx.currentTime, o = actx.createOscillator(), g = actx.createGain();
+    o.type = type || 'sine';
+    o.frequency.setValueAtTime(freq, t);
+    if (slideTo) o.frequency.exponentialRampToValueAtTime(slideTo, t + dur);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g); g.connect(actx.destination);
+    o.start(t); o.stop(t + dur + 0.02);
+  }
+  function unlock() {
+    if (!actx) { try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return; } }
+    if (actx.state === 'suspended') actx.resume();
+  }
+  ['pointerdown', 'keydown'].forEach(function (ev) { document.addEventListener(ev, unlock, { passive: true }); });
+  document.addEventListener('mouseover', function (e) {
+    var el = e.target.closest && e.target.closest('.card, .emby-tab-button, .headerButton, .navMenuOption');
+    if (!el || el.contains(e.relatedTarget)) return;
+    var now = Date.now(); if (now - lastHover < 60) return; lastHover = now;
+    blip(1250, 0.05, 0.015, 'sine');
+  });
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest && e.target.closest('.card, button, .nb-hero-actions a, .emby-tab-button, .navMenuOption');
+    if (el) blip(520, 0.12, 0.035, 'triangle', 860);
+  }, true);
 
   document.addEventListener('viewshow', tick);
   window.addEventListener('hashchange', function () { setTimeout(tick, 400); });

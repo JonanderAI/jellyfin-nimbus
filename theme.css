@@ -539,3 +539,10 @@ html::before {
 .nb-hero-actions .nb-hero-play:hover::after, .btnPlay:hover::after { animation: nb-shine .8s var(--nb-ease); }
 .detailPageContent, .detailPagePrimaryContainer { animation: nb-rise .5s var(--nb-ease) backwards; }
 @media (prefers-reduced-motion: reduce) { html::before, .nb-hero { animation: none !important; } }
+
+/* Hover sin recortes: Jellyfin pone contain:content en .card, que recorta el aro y el zoom */
+.card, .cardBox, .cardScalable { contain: none !important; }
+
+/* Episodios (los reescribe hero.js): "Temporada 1 · Episodio 4" y titulo en otro tono */
+.nb-ep-num { display: block; font-size: .92em; font-weight: 600; letter-spacing: .02em; color: #8fa3e8; }
+.nb-ep-name { display: block; color: #e6ebff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
