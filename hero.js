@@ -421,9 +421,19 @@
     });
   }
 
-  function tick() {
-    markNav();
+  // Ficha: el logo se alinea con el texto aunque el poster mida distinto (pelicula, serie, temporada...)
+  function detailVars() {
+    var rb = document.querySelector('.itemDetailPage:not(.hide) .detailRibbon');
+    var root = document.documentElement;
+    if (!rb) { root.style.removeProperty('--nb-detail-left'); return; }
+    var pl = parseFloat(getComputedStyle(rb).paddingLeft) || 0;
+    var v = Math.round(pl) + 'px';
+    if (root.style.getPropertyValue('--nb-detail-left') !== v) root.style.setProperty('--nb-detail-left', v);
+  }
+
+  function tick() {    markNav();
     detailPlay();
+    detailVars();
     moonfin();
     brandLogo();
     ensureBtn();

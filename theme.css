@@ -1331,3 +1331,32 @@ html body .backgroundContainer, html body .backgroundContainer.withBackdrop { ba
   .btnPlay .detailButton-content, .detailRibbon .btnPlay .detailButton-content { flex-direction: row !important; flex-wrap: nowrap; gap: .4em; white-space: nowrap; }
   .nb-play-txt { margin-left: 0 !important; font-size: .95em; }
 }
+
+/* ====================================================================
+   Ficha de serie y de temporada: logo alineado, lista de episodios
+   ==================================================================== */
+.detailLogo { left: var(--nb-detail-left, calc(3.3% + 360px + 60px)) !important; }
+@media (max-width: 800px) { .detailLogo { left: 3.3% !important; } }
+.itemDetailPage .detailRibbon .mainDetailButtons { flex-wrap: wrap; }
+
+/* Lista de episodios */
+.itemDetailPage .itemsContainer.vertical-list { padding-right: 0 !important; }
+.itemDetailPage .listItem.listItem-largeImage, .itemDetailPage .vertical-list .listItem {
+  background: rgba(var(--nb-surf-rgb), .45) !important; border: 1px solid var(--nb-line); border-radius: 18px !important; margin: 0 0 .8em; padding: .7em;
+  transition: transform .25s var(--nb-ease), background .2s, border-color .2s; animation: nb-rise .5s var(--nb-ease) backwards;
+}
+.itemDetailPage .vertical-list .listItem:nth-child(2) { animation-delay: .04s; }
+.itemDetailPage .vertical-list .listItem:nth-child(3) { animation-delay: .08s; }
+.itemDetailPage .vertical-list .listItem:nth-child(4) { animation-delay: .12s; }
+.itemDetailPage .vertical-list .listItem:nth-child(n+5) { animation-delay: .16s; }
+.itemDetailPage .vertical-list .listItem:hover { background: rgba(var(--nb-surf-rgb), .78) !important; border-color: rgba(var(--nb-accent-rgb), .45); transform: translateX(4px); }
+.itemDetailPage .listItemImage-large, .itemDetailPage .listItemImage { border-radius: 12px !important; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,.4); position: relative; }
+.itemDetailPage .listItemImageButton { background: linear-gradient(135deg, var(--nb-accent), var(--nb-accent-2)) !important; color: #04101e !important; border-radius: 50% !important;
+  width: 3rem !important; height: 3rem !important; opacity: 0; transform: scale(.7); transition: opacity .2s, transform .25s var(--nb-ease); box-shadow: 0 8px 22px rgba(var(--nb-accent-rgb), .45); }
+.itemDetailPage .listItem:hover .listItemImageButton, .itemDetailPage .listItemImageButton:focus-visible { opacity: 1; transform: none; }
+@media (hover: none) { .itemDetailPage .listItemImageButton { opacity: 1; transform: none; } }
+.itemDetailPage .listItemBodyText { font-family: var(--nb-font-head); font-weight: 700; text-align: left; }
+.itemDetailPage .listItemBodyText.secondary, .itemDetailPage .listItemBodyText-secondary { color: var(--nb-muted); font-family: var(--nb-font-body); font-weight: 400; }
+.itemDetailPage .listItemBody .listItemBodyText:last-child { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.55; }
+.itemDetailPage .listItem .itemProgressBar { border-radius: 0 0 12px 12px; }
+.itemDetailPage .listItem .listItemIndexNumber { color: var(--nb-accent); font-family: var(--nb-font-head); font-weight: 800; }
