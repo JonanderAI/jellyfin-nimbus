@@ -1299,3 +1299,23 @@ html body .backgroundContainer, html body .backgroundContainer.withBackdrop { ba
 .loginPage .card[data-type="User"] .cardImageContainer, .selectUserPage .cardImageContainer { border-radius: 50% !important; }
 .loginPage .card[data-type="User"]:hover .cardScalable, .selectUserPage .card:hover .cardScalable { box-shadow: 0 0 0 3px var(--nb-accent), 0 0 40px rgba(var(--nb-accent-rgb), .5) !important; }
 @media (max-width: 800px) { .loginPage .readOnlyContent, .loginPage .manualLoginForm { margin: 4vh 14px 0; padding: 1.5em 1.3em; } }
+
+/* ====================================================================
+   Movil (auditado en 375px): cabecera compacta, ficha alineada con el margen, titulo visible
+   ==================================================================== */
+@media (max-width: 800px) {
+  header .MuiToolbar-root { min-height: 56px !important; padding-top: 6px !important; padding-bottom: 4px !important; }
+  .mainAnimatedPage.libraryPage:not(.itemDetailPage) { margin-top: 6px; }
+  /* en movil Jellyfin oculta el logo grande: el titulo en texto debe verse */
+  .itemDetailPage .nameContainer { display: block !important; }
+  .itemDetailPage .itemName.parentNameLast { font-size: 1.9em; line-height: 1.1; text-align: left; }
+  .itemDetailPage .itemName.originalTitle { text-align: left; }
+  .itemDetailPage .detailRibbon { padding-left: var(--nb-gutter) !important; padding-right: var(--nb-gutter) !important; }
+  .itemDetailPage .detailRibbon .infoWrapper { margin: 0 !important; align-self: flex-start !important; text-align: left !important; width: 100% !important; }
+  .itemDetailPage .itemMiscInfo { justify-content: flex-start !important; }
+  .itemDetailPage .detailRibbon .mainDetailButtons { width: 100%; }
+  .itemDetailPage .detailPagePrimaryContent { padding-left: var(--nb-gutter) !important; padding-right: var(--nb-gutter) !important; }
+  .itemDetailPage .detailSection { padding: 0 !important; }
+  .itemDetailPage .trackSelections .selectContainer { flex: 1 1 100%; max-width: none; }
+  .button-link, .itemDetailPage .detailsGroupItem a { min-height: 32px; display: inline-flex; align-items: center; }
+}
