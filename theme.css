@@ -923,3 +923,9 @@ header .MuiButton-root:first-of-type .MuiButton-startIcon { margin-right: .3em !
 .nb-swatches { flex-wrap: wrap; row-gap: 10px; }
 .nb-sw { flex: none; }
 
+
+/* Contador de episodios: icono de TV en lugar del punto */
+.countIndicator::before {
+  content: "\f26c"; width: auto; height: auto; border-radius: 0; background: none;
+  font-family: "Font Awesome 6 Free"; font-weight: 900; font-size: 11px; line-height: 1; color: var(--nb-accent);
+}
