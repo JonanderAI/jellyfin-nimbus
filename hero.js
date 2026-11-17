@@ -136,6 +136,138 @@
     clearTimeout(obsT); obsT = setTimeout(function () { episodes(); }, 150);
   }).observe(document.body, { childList: true, subtree: true });
 
+  // ---- Personalizacion: se guarda en localStorage (por dispositivo/navegador) ----
+  var KEY = 'nb-settings';
+  var DEF = { a1: '#4cc9ff', a2: '#7a7bff', font: 0, zoom: 1.06, radius: 14, hero: true, bgAnim: true, anim: true, sound: true };
+  var FONTS = [
+    ['Actual', 'Plus Jakarta Sans', 'Geist', 'family=Geist:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800'],
+    ['Mágica', 'Outfit', 'Figtree', 'family=Outfit:wght@500;600;700;800&family=Figtree:wght@400;500;600'],
+    ['Cine', 'Cinzel', 'DM Sans', 'family=Cinzel:wght@600;700;800&family=DM+Sans:wght@400;500;600'],
+    ['Tech', 'Sora', 'DM Sans', 'family=Sora:wght@600;700;800&family=DM+Sans:wght@400;500;600'],
+    ['Familiar', 'Fredoka', 'Figtree', 'family=Fredoka:wght@500;600;700&family=Figtree:wght@400;500;600']
+  ];
+  var PRESETS = [['#4cc9ff', '#7a7bff'], ['#ff7ac8', '#a78bff'], ['#ffbe5a', '#ff7a59'], ['#6ee6aa', '#4cc9ff'], ['#b794ff', '#ff7ac8']];
+  function loadS() { try { return Object.assign({}, DEF, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { return Object.assign({}, DEF); } }
+  var S = loadS();
+  function saveS() { try { localStorage.setItem(KEY, JSON.stringify(S)); localStorage.setItem('nb-sound', S.sound ? 'on' : 'off'); } catch (e) {} }
+  function rgbOf(hex) { var n = parseInt(hex.slice(1), 16); return (n >> 16) + ',' + ((n >> 8) & 255) + ',' + (n & 255); }
+  function applyS() {
+    var r = document.documentElement, st = r.style, f = FONTS[S.font] || FONTS[0];
+    st.setProperty('--nb-accent', S.a1); st.setProperty('--nb-accent-2', S.a2); st.setProperty('--nb-accent-rgb', rgbOf(S.a1));
+    st.setProperty('--nb-card-zoom', S.zoom); st.setProperty('--nb-radius', S.radius + 'px');
+    st.setProperty('--nb-font-head', '"' + f[1] + '", system-ui, sans-serif');
+    st.setProperty('--nb-font-body', '"' + f[2] + '", system-ui, sans-serif');
+    var l = document.getElementById('nb-font-link');
+    if (!l) { l = document.createElement('link'); l.id = 'nb-font-link'; l.rel = 'stylesheet'; document.head.appendChild(l); }
+    var href = 'https://fonts.googleapis.com/css2?' + f[3] + '&display=swap';
+    if (l.getAttribute('href') !== href) l.setAttribute('href', href);
+    r.classList.toggle('nb-no-hero', !S.hero);
+    r.classList.toggle('nb-no-bg-anim', !S.bgAnim);
+    r.classList.toggle('nb-no-anim', !S.anim);
+  }
+  applyS();
+
+  var syncFns = [];
+  function commit() { applyS(); saveS(); syncFns.forEach(function (fn) { fn(); }); }
+
+  function buildPanel() {
+    var p = document.querySelector('.nb-panel');
+    if (p) return p;
+    p = document.createElement('aside');
+    p.className = 'nb-panel';
+    p.innerHTML = '<div class="nb-panel-head"><b>Personalizar</b><button class="nb-x" aria-label="Cerrar">✕</button></div><div class="nb-panel-body"></div>';
+    var body = p.querySelector('.nb-panel-body');
+    function sec(t) {
+      var d = document.createElement('div'); d.className = 'nb-sec';
+      var h = document.createElement('div'); h.className = 'nb-sec-t'; h.textContent = t;
+      d.appendChild(h); body.appendChild(d); return d;
+    }
+    function row(parent, label, ctrl) {
+      var r = document.createElement('label'); r.className = 'nb-row';
+      var s = document.createElement('span'); s.textContent = label;
+      r.appendChild(s); r.appendChild(ctrl); parent.appendChild(r); return r;
+    }
+    // Colores
+    var c = sec('Color de acento'), sw = document.createElement('div'); sw.className = 'nb-swatches';
+    PRESETS.forEach(function (pr) {
+      var b = document.createElement('button'); b.className = 'nb-sw'; b.setAttribute('aria-label', pr[0]);
+      b.style.background = 'linear-gradient(135deg,' + pr[0] + ',' + pr[1] + ')';
+      b.onclick = function () { S.a1 = pr[0]; S.a2 = pr[1]; commit(); };
+      syncFns.push(function () { b.classList.toggle('nb-on', S.a1 === pr[0] && S.a2 === pr[1]); });
+      sw.appendChild(b);
+    });
+    c.appendChild(sw);
+    [['Acento 1', 'a1'], ['Acento 2', 'a2']].forEach(function (k) {
+      var i = document.createElement('input'); i.type = 'color';
+      i.oninput = function () { S[k[1]] = i.value; applyS(); saveS(); syncFns.forEach(function (fn) { if (fn !== sync) fn(); }); };
+      var sync = function () { i.value = S[k[1]]; };
+      syncFns.push(sync); row(c, k[0], i);
+    });
+    // Fuente
+    var f = sec('Fuente'), fw = document.createElement('div'); fw.className = 'nb-chips';
+    FONTS.forEach(function (ft, idx) {
+      var b = document.createElement('button'); b.className = 'nb-chip'; b.textContent = ft[0];
+      b.onclick = function () { S.font = idx; commit(); };
+      syncFns.push(function () { b.classList.toggle('nb-on', S.font === idx); });
+      fw.appendChild(b);
+    });
+    f.appendChild(fw);
+    // Tarjetas
+    var t = sec('Tarjetas');
+    function slider(label, key, min, max, step, fmt) {
+      var i = document.createElement('input'); i.type = 'range'; i.min = min; i.max = max; i.step = step;
+      var v = document.createElement('em');
+      var wrap = document.createElement('div'); wrap.className = 'nb-range'; wrap.appendChild(i); wrap.appendChild(v);
+      i.oninput = function () { S[key] = parseFloat(i.value); applyS(); saveS(); v.textContent = fmt(S[key]); };
+      syncFns.push(function () { i.value = S[key]; v.textContent = fmt(S[key]); });
+      row(t, label, wrap);
+    }
+    slider('Zoom al pasar', 'zoom', 1, 1.15, 0.01, function (x) { return x.toFixed(2) + 'x'; });
+    slider('Redondeo', 'radius', 4, 26, 1, function (x) { return x + ' px'; });
+    // Opciones
+    var o = sec('Opciones');
+    [['Mostrar hero del Inicio', 'hero'], ['Fondo animado', 'bgAnim'], ['Animaciones', 'anim'], ['Sonidos', 'sound']].forEach(function (k) {
+      var i = document.createElement('input'); i.type = 'checkbox'; i.className = 'nb-switch';
+      i.onchange = function () { S[k[1]] = i.checked; commit(); };
+      syncFns.push(function () { i.checked = !!S[k[1]]; });
+      row(o, k[0], i);
+    });
+    var rb = document.createElement('button'); rb.className = 'nb-reset'; rb.textContent = 'Restablecer valores';
+    rb.onclick = function () { S = Object.assign({}, DEF); commit(); };
+    body.appendChild(rb);
+    var note = document.createElement('div'); note.className = 'nb-note'; note.textContent = 'Se guarda en este dispositivo.';
+    body.appendChild(note);
+    p.querySelector('.nb-x').onclick = function () { p.classList.remove('nb-open'); };
+    document.body.appendChild(p);
+    syncFns.forEach(function (fn) { fn(); });
+    return p;
+  }
+
+  function ensureBtn() {
+    if (document.querySelector('.nb-cust-btn')) return;
+    var btns = [].slice.call(document.querySelectorAll('header .MuiToolbar-root .MuiIconButton-root')).filter(function (b) { return b.querySelector('svg'); });
+    var last = btns[btns.length - 1];
+    if (!last) return;
+    var b = document.createElement('button');
+    b.className = 'MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeLarge nb-cust-btn';
+    b.setAttribute('aria-label', 'Personalizar tema'); b.setAttribute('title', 'Personalizar tema');
+    b.innerHTML = '<span class="material-icons palette" aria-hidden="true"></span>';
+    b.onclick = function (e) { e.stopPropagation(); buildPanel().classList.toggle('nb-open'); };
+    last.insertAdjacentElement('afterend', b);
+  }
+  document.addEventListener('click', function (e) {
+    var p = document.querySelector('.nb-panel.nb-open');
+    if (p && !p.contains(e.target) && !e.target.closest('.nb-cust-btn')) p.classList.remove('nb-open');
+  });
+
+  // Cabecera con cristal al hacer scroll
+  function onScroll(e) {
+    var t = e && e.target, y = (t && typeof t.scrollTop === 'number') ? t.scrollTop : 0;
+    y = Math.max(y, window.scrollY || 0, document.body.scrollTop || 0);
+    document.documentElement.classList.toggle('nb-scrolled', y > 24);
+  }
+  document.addEventListener('scroll', onScroll, true);
+
   // Marca la pestana activa del menu superior (Favoritos, Peliculas, Series...)
   function markNav() {
     var h = location.hash.split('?');
@@ -148,6 +280,7 @@
 
   function tick() {
     markNav();
+    ensureBtn();
     if (!api() || !isHome()) { episodes(); return; }
     var page = pageEl();
     if (page) { build(page); libs(page); }
