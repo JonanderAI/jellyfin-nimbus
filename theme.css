@@ -929,3 +929,7 @@ header .MuiButton-root:first-of-type .MuiButton-startIcon { margin-right: .3em !
   content: "\f26c"; width: auto; height: auto; border-radius: 0; background: none;
   font-family: "Font Awesome 6 Free"; font-weight: 900; font-size: 11px; line-height: 1; color: var(--nb-accent);
 }
+
+/* Sin el boton grande de play sobre la miniatura al pasar el raton (queda el degradado y los botones pequenos) */
+.cardOverlayFab-primary, .cardOverlayButton.cardOverlayFab-primary { display: none !important; }
+.cardOverlayContainer { background: linear-gradient(0deg, rgba(var(--nb-bg-rgb), .75) 0%, rgba(var(--nb-bg-rgb), .0) 55%) !important; }
