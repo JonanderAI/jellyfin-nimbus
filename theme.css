@@ -1319,3 +1319,15 @@ html body .backgroundContainer, html body .backgroundContainer.withBackdrop { ba
   .itemDetailPage .trackSelections .selectContainer { flex: 1 1 100%; max-width: none; }
   .button-link, .itemDetailPage .detailsGroupItem a { min-height: 32px; display: inline-flex; align-items: center; }
 }
+
+/* Movil: ficha mas compacta (boton Reproducir en una linea, botones que caben, menos hueco arriba) */
+@media (max-width: 800px) {
+  .itemDetailPage .itemBackdrop { height: 230px !important; }
+  .detailLogo { top: 60px !important; }
+  .backdropImage.displayingBackdropImage { height: min(55vh, 460px) !important; }
+  .itemDetailPage .detailRibbon .mainDetailButtons { gap: .4em; flex-wrap: nowrap; align-items: center; }
+  .itemDetailPage .detailRibbon .detailButton { width: 2.7em !important; height: 2.7em !important; flex: 0 0 auto; }
+  .itemDetailPage .detailRibbon .btnPlay { width: auto !important; flex: 0 1 auto; padding: 0 1.1em !important; }
+  .btnPlay .detailButton-content, .detailRibbon .btnPlay .detailButton-content { flex-direction: row !important; flex-wrap: nowrap; gap: .4em; white-space: nowrap; }
+  .nb-play-txt { margin-left: 0 !important; font-size: .95em; }
+}
