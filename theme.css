@@ -1014,3 +1014,22 @@ header .MuiButton-root:not(.nb-active):hover { letter-spacing: .01em; }
 .nb-panel.nb-open .nb-sec:nth-child(3) { animation-delay: .1s; }
 .nb-panel.nb-open .nb-sec:nth-child(4) { animation-delay: .15s; }
 .nb-panel.nb-open .nb-sec:nth-child(5) { animation-delay: .2s; }
+
+/* Ficha: Jellyfin pinta el fondo del contenido con .noBackdropTransparency; se anula con mas especificidad */
+.noBackdropTransparency .detailPageWrapperContainer, .itemDetailPage .detailPageWrapperContainer, .noBackdropTransparency .detailPageContent {
+  background: transparent !important; background-color: transparent !important; background-image: none !important;
+}
+
+/* Colecciones ("Mis contenidos"): icono antes del titulo segun el tipo */
+.card[data-type="CollectionFolder"] .cardText a::before {
+  content: "\f07b"; font-family: "Font Awesome 6 Free"; font-weight: 900; font-size: .72em; margin-right: .55em; color: var(--nb-accent); display: inline-block; transform: translateY(-.04em);
+}
+.card[data-collectiontype="movies"] .cardText a::before { content: "\f008"; }
+.card[data-collectiontype="tvshows"] .cardText a::before { content: "\f26c"; }
+.card[data-collectiontype="music"] .cardText a::before { content: "\f001"; }
+.card[data-collectiontype="homevideos"] .cardText a::before, .card[data-collectiontype="photos"] .cardText a::before { content: "\f03e"; }
+.card[data-collectiontype="books"] .cardText a::before { content: "\f02d"; }
+.card[data-collectiontype="musicvideos"] .cardText a::before { content: "\f03d"; }
+.card[data-collectiontype="boxsets"] .cardText a::before { content: "\f5fd"; }
+.card[data-collectiontype="playlists"] .cardText a::before { content: "\f0cb"; }
+.card[data-collectiontype="livetv"] .cardText a::before { content: "\f519"; }
