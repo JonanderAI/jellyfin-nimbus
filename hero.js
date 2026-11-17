@@ -395,8 +395,21 @@
     span.style.setProperty('--nb-logo', 'url("' + img.src + '")');
   }
 
+  // Ficha: el boton de reproducir lleva texto (usa el titulo localizado que pone Jellyfin: Reproducir / Reanudar...)
+  function detailPlay() {
+    document.querySelectorAll('.itemDetailPage:not(.hide) .btnPlay:not(.hide)').forEach(function (b) {
+      if (b.querySelector('.nb-play-txt')) return;
+      var s = document.createElement('span');
+      s.className = 'nb-play-txt';
+      s.textContent = b.getAttribute('title') || tr('play');
+      var c = b.querySelector('.detailButton-content') || b;
+      c.appendChild(s);
+    });
+  }
+
   function tick() {
     markNav();
+    detailPlay();
     moonfin();
     brandLogo();
     ensureBtn();

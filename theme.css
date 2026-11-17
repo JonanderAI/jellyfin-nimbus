@@ -958,3 +958,59 @@ header .MuiButton-root:first-of-type .MuiButton-startIcon { margin-right: .3em !
 .nb-hero-in .nb-hero-bar i { animation: nb-bar 10s linear forwards; }
 /* Cabecera: entra deslizando */
 header.MuiAppBar-root { animation: nb-drop .7s var(--nb-ease) backwards; }
+
+/* ====================================================================
+   Ficha de detalle
+   ==================================================================== */
+.itemDetailPage, .detailPageWrapperContainer, .detailPagePrimaryContainer, .detailPageSecondaryContainer, .detailPagePrimaryContent { background: transparent !important; }
+.itemBackdrop { height: clamp(380px, 52vh, 600px) !important; }
+/* Logo de la pelicula alineado con el texto (en lugar de flotando en el centro) */
+.detailLogo { left: calc(3.3% + 360px + 60px) !important; right: auto !important; width: min(460px, 44vw) !important; height: 150px !important;
+  top: calc(clamp(380px, 52vh, 600px) - 107px - 150px - 14px) !important; background-position: left bottom !important; background-size: contain !important; background-repeat: no-repeat !important;
+  filter: drop-shadow(0 6px 24px rgba(0,0,0,.6)); animation: nb-rise .7s var(--nb-ease) backwards; }
+.itemDetailPage:has(.detailLogo[style*="background-image"]) .nameContainer { display: none; }
+/* Poster */
+.detailImageContainer .cardBox, .detailImageContainer .cardScalable { border-radius: 20px !important; box-shadow: 0 24px 60px rgba(0,0,0,.6) !important; animation: nb-zoomin .7s var(--nb-ease) backwards; }
+/* Texto: descripcion legible, sin la caja azul */
+.detailSection { background: transparent !important; border: 0 !important; padding-left: 0 !important; }
+.detailSectionContent .overview, .detailSection .overview { font-size: 1.07em !important; line-height: 1.75 !important; color: #dfe5ff !important; max-width: 720px; text-align: left; }
+.itemDetailsGroup, .detailSection .detailInfo { font-size: .95em; }
+.detailSection .tagline, .itemTagline { color: var(--nb-accent); font-family: var(--nb-font-head); font-weight: 700; font-size: 1.15em; }
+/* Botones de la ficha */
+.nb-play-txt { margin-left: .55em; font-weight: 700; font-family: var(--nb-font-head); white-space: nowrap; }
+.detailRibbon .btnPlay .detailButton-content { display: inline-flex; align-items: center; }
+.detailRibbon .btnPlay { width: auto !important; min-width: 0; padding: 0 1.6em !important; }
+.itemDetailPage .detailRibbon, .itemDetailPage .infoWrapper { animation: nb-rise .6s var(--nb-ease) .1s backwards; }
+@media (max-width: 800px) { .detailLogo { left: 3.3% !important; top: calc(clamp(380px, 52vh, 600px) - 107px - 130px - 8px) !important; height: 130px !important; } }
+
+/* ====================================================================
+   Animaciones y microinteracciones (botones, me gusta, visto...)
+   ==================================================================== */
+@keyframes nb-heart { 0% { transform: scale(1); } 30% { transform: scale(1.45); } 60% { transform: scale(.9); } 100% { transform: scale(1); } }
+@keyframes nb-tick { 0% { transform: scale(.5) rotate(-20deg); opacity: 0; } 60% { transform: scale(1.25) rotate(6deg); opacity: 1; } 100% { transform: none; } }
+.emby-button, .paper-icon-button-light, .detailButton, .cardOverlayButton, .MuiButton-root, .MuiIconButton-root, .headerButton { transition: transform .22s var(--nb-ease), background .22s, color .22s, box-shadow .22s, opacity .22s; }
+.detailButton:hover, .cardOverlayButton:hover { transform: translateY(-2px) scale(1.08); }
+.detailButton:active, .cardOverlayButton:active, .emby-button:active, .nb-hero-actions a:active, .MuiButton-root:active { transform: scale(.94) !important; transition-duration: .08s; }
+.detailButton:hover .detailButton-icon, .cardOverlayButton:hover .cardOverlayButtonIcon { color: var(--nb-accent); }
+.btnPlay:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(var(--nb-accent-rgb), .5) !important; }
+/* Me gusta (corazon): rebote y color al activarlo */
+.btnUserRating[data-likes], .btnUserRating[data-isfavorite="true"], .btnUserRating.btnUserRatingOn, .cardOverlayButton[data-action="favorite"].btnUserRatingOn { color: #ff5c7a !important; }
+.btnUserRating[data-isfavorite="true"] .detailButton-icon, .btnUserRating.btnUserRatingOn .detailButton-icon { animation: nb-heart .55s var(--nb-ease); color: #ff5c7a; }
+.btnUserRating:active .detailButton-icon, .cardOverlayButton[data-action="favorite"]:active .cardOverlayButtonIcon { animation: nb-heart .45s var(--nb-ease); }
+/* Visto (check) */
+.btnPlaystate.btnPlayStateOn .detailButton-icon, .cardOverlayButton[data-action="playstate"].playstatebutton-icon-played .cardOverlayButtonIcon { color: var(--nb-accent); animation: nb-tick .45s var(--nb-ease); }
+.btnPlaystate:active .detailButton-icon { animation: nb-tick .35s var(--nb-ease); }
+/* Entrada suave de paginas */
+.mainAnimatedPage { animation: nb-fade .35s ease backwards; }
+@keyframes nb-fade { from { opacity: 0; } to { opacity: 1; } }
+/* Pestanas y enlaces del menu: subrayado animado desde la izquierda */
+header .MuiButton-root:not(.nb-active):hover { letter-spacing: .01em; }
+/* Interruptores / chips del panel */
+.nb-chip, .nb-sw, .nb-reset { transition: transform .18s var(--nb-ease), background .2s, box-shadow .2s; }
+.nb-chip:hover, .nb-reset:hover { transform: translateY(-1px); }
+.nb-chip:active, .nb-sw:active, .nb-reset:active { transform: scale(.94); }
+.nb-panel.nb-open .nb-sec { animation: nb-rise .45s var(--nb-ease) backwards; }
+.nb-panel.nb-open .nb-sec:nth-child(2) { animation-delay: .05s; }
+.nb-panel.nb-open .nb-sec:nth-child(3) { animation-delay: .1s; }
+.nb-panel.nb-open .nb-sec:nth-child(4) { animation-delay: .15s; }
+.nb-panel.nb-open .nb-sec:nth-child(5) { animation-delay: .2s; }
